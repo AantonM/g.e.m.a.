@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cet325.gamers_emotional_state_detection.UserDetailsActivity">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="User details"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/txtUserId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="34dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:ems="10"
+        android:hint="User ID"
+        android:inputType="textPersonName" />
+
+    <RadioGroup
+        android:id="@+id/rdgGameDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtUserId"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="15dp" >
+
+        <TextView
+            android:id="@+id/txtTitleGameDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Game difficulty"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rdbEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Easy"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rdbMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Medium"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rdbHard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hard"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/txtNotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rdgGameDifficulty"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
+        android:ems="10"
+        android:hint="Notes"
+        android:inputType="textMultiLine"
+        android:maxLines="10"/>
+
+    <Button
+        android:id="@+id/btnStartGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtNotes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:text="Start Game" />
+
+</RelativeLayout>
