@@ -24,7 +24,7 @@ public class CameraManager {
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
-                handler.postDelayed(rPictureTaking, 5000);
+                handler.postDelayed(rPictureTaking, 10000);
             }
         }
     };
@@ -36,6 +36,7 @@ public class CameraManager {
 
     public void stopTakingPictures()
     {
+        camServ.closeCameraPicture();
         handler.removeCallbacks(rPictureTaking);
     }
 
