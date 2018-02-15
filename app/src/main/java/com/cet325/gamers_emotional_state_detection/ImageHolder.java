@@ -29,7 +29,7 @@ public class ImageHolder {
         images = new ArrayList<>();
     }
 
-    public static ImageHolder getIntance()
+    public static ImageHolder getInstance()
     {
         if (single_instance == null)
             single_instance = new ImageHolder();

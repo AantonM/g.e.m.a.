@@ -106,7 +106,7 @@ public class CameraHandler {
     public void openCameraPicture() {
         startBackgroundThread();
         openCamera();
-        Log.d("CameraHandler", "done.");
+        Log.d("DevDebug", "CameraHandler: Camera opened.");
     }
 
     public void closeCameraPicture() {
@@ -115,13 +115,13 @@ public class CameraHandler {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void takePicture() {
-        Log.d("CameraHandler", "inside TakePicture");
+        Log.d("DevDebug", "CameraHandler: Inside TakePicture");
         if (cameraDevice == null) {
             return;
         }
 
         CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
-        imageHolder = ImageHolder.getIntance();
+        imageHolder = ImageHolder.getInstance();
 
         try {
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraDevice.getId());
@@ -164,34 +164,61 @@ public class CameraHandler {
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
                     Image image = null;
+                    //***TODO: delete file storage - currently used while developing
+                    try {
+                        //***s
+                        image = reader.acquireLatestImage();
 
-                    image = reader.acquireLatestImage();
+                        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                        byte[] bytes = new byte[buffer.capacity()];
+                        buffer.get(bytes);
+                        //***TODO: delete file storage - currently used while developing
+                        save(bytes);
+                        //***
+                        bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
-                    ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                    byte[] bytes = new byte[buffer.capacity()];
-                    buffer.get(bytes);
-                    bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
+                        //TODO: fix the orientation so despite the phone position the photo is always correct and not rotated
+                        // use  ORIENTATIONS.get(rotation)
+                        bitmapImage = rotateImage(bitmapImage, 270);
 
-                    //TODO: fix the orientation so despite the phone position the photo is always correct and not rotated
-                    // use  ORIENTATIONS.get(rotation)
-                    bitmapImage = rotateImage(bitmapImage, 270);
+                        //Save image to holder object
+                        imageHolder.setImage(bitmapImage);
+                        Log.d("DevDebug", "CameraHandler: Image holder size:" + imageHolder.getImages().size());
 
-                    //Save image to holder object
-                    imageHolder.setImage(bitmapImage);
-                    Log.d("Image holder", "Image holder size:" + imageHolder.getImages().size());
+                    //***TODO: delete file storage - currently used while developing
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    } finally {
+                        //***
+                        if (image != null) {
+                            image.close();
+                        }
+                    }
+                }
 
-                    if (image != null) {
-                        image.close();
+                //***TODO: delete file storage - currently used while developing
+                private void save(byte[] bytes) throws IOException {
+                    OutputStream outputStream = null;
+                    try {
+                        outputStream = new FileOutputStream(file);
+                        outputStream.write(bytes);
+                        Log.d("DevDebug", "CameraHandler: Image is saved to external memory.");
+                    } finally {
+                        if (outputStream != null)
+                            outputStream.close();
                     }
                 }
             };
+            //***
+
 
             reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
             final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    Log.d("CameraHandler", "image is saved");
                 }
             };
 

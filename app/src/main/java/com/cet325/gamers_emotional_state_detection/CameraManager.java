@@ -19,12 +19,12 @@ public class CameraManager {
         @Override
         public void run() {
             try {
-                Log.d("Taking pictures", "Picture taken");
+                Log.d("DevDebug", "Camera Manager: Take picture called.");
                 camServ.takePicture();
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
-                handler.postDelayed(rPictureTaking, 10000);
+                handler.postDelayed(rPictureTaking, 5000);
             }
         }
     };
@@ -36,6 +36,7 @@ public class CameraManager {
 
     public void stopTakingPictures()
     {
+        Log.d("DevDebug", "Camera Manager: Taking pictures stopped.");
         camServ.closeCameraPicture();
         handler.removeCallbacks(rPictureTaking);
     }
