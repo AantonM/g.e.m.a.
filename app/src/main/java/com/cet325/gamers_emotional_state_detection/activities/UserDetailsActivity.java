@@ -1,10 +1,12 @@
-package com.cet325.gamers_emotional_state_detection;
+package com.cet325.gamers_emotional_state_detection.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.cet325.gamers_emotional_state_detection.R;
 
 public class UserDetailsActivity extends AppCompatActivity {
 

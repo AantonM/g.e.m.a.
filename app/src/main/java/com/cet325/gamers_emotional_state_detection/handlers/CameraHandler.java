@@ -1,4 +1,4 @@
-package com.cet325.gamers_emotional_state_detection;
+package com.cet325.gamers_emotional_state_detection.handlers;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -18,7 +18,6 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -28,7 +27,8 @@ import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
-import android.widget.ImageView;
+
+import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -212,7 +212,6 @@ public class CameraHandler {
                 }
             };
             //***
-
 
             reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
             final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {

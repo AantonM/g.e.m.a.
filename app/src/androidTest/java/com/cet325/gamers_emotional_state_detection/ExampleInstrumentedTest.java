@@ -2,6 +2,8 @@ package com.cet325.gamers_emotional_state_detection;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import com.cet325.gamers_emotional_state_detection.activities.HomeActivity;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *

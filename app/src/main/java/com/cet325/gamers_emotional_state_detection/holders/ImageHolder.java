@@ -1,11 +1,9 @@
-package com.cet325.gamers_emotional_state_detection;
+package com.cet325.gamers_emotional_state_detection.holders;
 
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 //Singleton
 public class ImageHolder {

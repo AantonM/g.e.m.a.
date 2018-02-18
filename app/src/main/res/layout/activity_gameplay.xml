@@ -3,34 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cet325.gamers_emotional_state_detection.GameplayActivity">
+    tools:context="com.cet325.gamers_emotional_state_detection.activities.GameplayActivity">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="27dp"
         android:text="Game"
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/txtEmotionResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="22dp"
-        android:layout_marginStart="12dp"
-        android:text="Start" />
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="57dp"
+        android:text="Emotion Result:" />
+
+    <TextView
+        android:id="@+id/txtEmotionValue"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignStart="@+id/txtEmotionResult"
+        android:layout_below="@+id/txtEmotionResult"
+        android:layout_marginTop="17dp"
+        android:text="value" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button"
-        android:layout_marginStart="27dp"
-        android:layout_toEndOf="@+id/textView3"
-        android:text="Stop" />
+        android:layout_below="@+id/txtEmotionValue"
+        android:layout_centerHorizontal="true"
+        android:text="Stop Emotion Face Recognition" />
 </RelativeLayout>

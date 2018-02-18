@@ -1,30 +1,34 @@
-package com.cet325.gamers_emotional_state_detection;
+package com.cet325.gamers_emotional_state_detection.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
+import com.cet325.gamers_emotional_state_detection.R;
+import com.cet325.gamers_emotional_state_detection.managers.EmotionFaceRecognitionManager;
 
 public class GameplayActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
+    EmotionFaceRecognitionManager emotionFaceRecognitionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
-        startCamera();
+        startEmotionFaceRecognition();
     }
 
-    private void startCamera()
+    private void startEmotionFaceRecognition()
     {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
         {
@@ -35,18 +39,27 @@ public class GameplayActivity extends AppCompatActivity {
             return;
         }
 
-        final CameraManager camManager = new CameraManager(getApplicationContext());
-        camManager.startTakingPictures();
+        emotionFaceRecognitionManager = new EmotionFaceRecognitionManager(getApplicationContext());
+        emotionFaceRecognitionManager.startEmotionFaceRecognition();
 
-        Button btnStop = (Button) findViewById(R.id.button2);
+
+    //TODO: delete
+        final Button btnStop = (Button) findViewById(R.id.button2);
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                camManager.stopTakingPictures();
+                btnStop.setVisibility(View.INVISIBLE);
+                emotionFaceRecognitionManager.stopEmotionFaceRecognition();
+                printResult();
             }
         });
+    }
 
-
+    //TODO:delete
+    private void printResult() {
+        TextView txtResult = (TextView) findViewById(R.id.txtEmotionValue);
+        EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
+        txtResult.setText(emotionFaceRecognitionResultsHolder.getEmotionResultForGivenImg().toString());
     }
 
     @Override

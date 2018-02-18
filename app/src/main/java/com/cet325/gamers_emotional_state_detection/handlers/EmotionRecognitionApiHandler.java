@@ -1,9 +1,11 @@
-package com.cet325.gamers_emotional_state_detection;
+package com.cet325.gamers_emotional_state_detection.handlers;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
+
+import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +13,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
-import java.util.concurrent.ExecutionException;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
@@ -28,7 +29,7 @@ public class EmotionRecognitionApiHandler
     private Bitmap face_picture;
     private byte[] byte64Image;
 
-    public String runEmotionalFaceRecognition(Bitmap picture)
+    public String runEmotionalFaceRecognition(Bitmap picture, int pictureId)
     {
         face_picture = picture;
         String emotionalState = null;
@@ -43,9 +44,9 @@ public class EmotionRecognitionApiHandler
             }
         }
 
+        saveEmotionRecognitionResultToHolder(pictureId, emotionalState);
         return emotionalState;
     }
-
 
     // convert image to base 64 so that we can send the image to Emotion API
     private void encodeToBase64() {
@@ -53,6 +54,11 @@ public class EmotionRecognitionApiHandler
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             face_picture.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
             byte64Image = baos.toByteArray();
+    }
+
+    private void saveEmotionRecognitionResultToHolder(int pictureId, String emotionalState) {
+        EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
+        emotionFaceRecognitionResultsHolder.setEmotionResultForGivenImg(pictureId, emotionalState);
     }
 
     private class GetEmotionCall extends AsyncTask<Void, Void, String> {
@@ -120,7 +126,7 @@ public class EmotionRecognitionApiHandler
                     }
                     emotions += emotion + "\n";
                 }
-                Log.d("DevDebug","EmotionRecognitionApiHandler: EmotionRecognitionApiHandler" + emotions);
+                Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotions);
             } catch (JSONException e) {
                 Log.d("DevDebug","EmotionRecognitionApiHandler: No emotion detected. Try again later");
             }
