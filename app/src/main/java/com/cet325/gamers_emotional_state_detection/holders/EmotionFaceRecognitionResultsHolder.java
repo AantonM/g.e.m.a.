@@ -1,18 +1,22 @@
 package com.cet325.gamers_emotional_state_detection.holders;
 
+import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
+
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class EmotionFaceRecognitionResultsHolder {
 
     private static EmotionFaceRecognitionResultsHolder single_instance = null;
 
-    private LinkedHashMap<Integer, String> emotionResultForGivenImg;
 
-    public void setEmotionResultForGivenImg(int imageId, String emotionResult) {
-        emotionResultForGivenImg.put(imageId, emotionResult);
+    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionResultForGivenImg;
+
+    public void setEmotionResultForGivenImg(int imageId, ArrayList<EmotionValuesDataset> emotionsResult) {
+        emotionResultForGivenImg.put(imageId, emotionsResult);
     }
 
-    public LinkedHashMap<Integer, String> getEmotionResultForGivenImg() {
+    public LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> getEmotionResultForGivenImg() {
         return emotionResultForGivenImg;
     }
 

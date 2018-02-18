@@ -24,20 +24,23 @@
         android:layout_marginTop="57dp"
         android:text="Emotion Result:" />
 
-    <TextView
-        android:id="@+id/txtEmotionValue"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollResult"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_alignStart="@+id/txtEmotionResult"
         android:layout_below="@+id/txtEmotionResult"
         android:layout_marginTop="17dp"
-        android:text="value" />
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        android:visibility="visible">
+
+    </ScrollView>
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtEmotionValue"
+        android:layout_below="@+id/scrollResult"
         android:layout_centerHorizontal="true"
         android:text="Stop Emotion Face Recognition" />
 </RelativeLayout>

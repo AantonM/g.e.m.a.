@@ -3,20 +3,19 @@ package com.cet325.gamers_emotional_state_detection.managers;
 import com.cet325.gamers_emotional_state_detection.handlers.EmotionRecognitionApiHandler;
 import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 
-public class EmotionRecognitionManager {
+public class EmotionRecognitionAPIManager {
     private ImageHolder imageHolder;
     private EmotionRecognitionApiHandler erah;
     private int currentImageHolderSize;
     private boolean thereIsANewImage = false;
 
-    public EmotionRecognitionManager() {
+    public EmotionRecognitionAPIManager() {
         imageHolder = ImageHolder.getInstance();
         currentImageHolderSize = 0;
     }
 
     public String createEmotionRequiest() {
         thereIsANewImage = checkForNewImage();
-//        List<int, String> result = new ArrayList();
         if(thereIsANewImage)
         {
             erah = new EmotionRecognitionApiHandler();
@@ -30,7 +29,7 @@ public class EmotionRecognitionManager {
     private boolean checkForNewImage() {
 
         if(imageHolder.getImages().size() == currentImageHolderSize) {
-            //there is no new image
+            //there is NO new image
             return false;
         }
         else if(imageHolder.getImages().size() > currentImageHolderSize) {

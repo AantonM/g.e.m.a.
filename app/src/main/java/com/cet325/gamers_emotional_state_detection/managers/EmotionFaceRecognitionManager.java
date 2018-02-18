@@ -8,7 +8,7 @@ import java.util.List;
 
 public class EmotionFaceRecognitionManager {
     private CameraManager camManager;
-    private EmotionRecognitionManager emotionRecognitionManager;
+    private EmotionRecognitionAPIManager emotionRecognitionAPIManager;
     private Context context;
     private Handler handlerPictures;
     private Handler handlerEmotion;
@@ -32,10 +32,10 @@ public class EmotionFaceRecognitionManager {
         public void run() {
             try {
                 Log.d("DevDebug", "EmotFaceRecognitionMngr: Emotion recognition called.");
-                emotion = emotionRecognitionManager.createEmotionRequiest();
+                emotion = emotionRecognitionAPIManager.createEmotionRequiest();
                 addNewEmotionToList(emotion);
             } finally {
-                Log.d("DevDebug", "EmotFaceRecognitionMngr: Emotion list " + lstEmotionResults);
+                Log.d("DevDebug", "EmotFaceRecognitionMngr: Emotion list " + lstEmotionResults); //TODO:print from the holder instead of the list
                 handlerEmotion.postDelayed(rEmotionRecognition, 1000);
             }
         }
@@ -46,8 +46,8 @@ public class EmotionFaceRecognitionManager {
         handlerPictures = new Handler();
         handlerEmotion = new Handler();
         camManager = new CameraManager(context);
-        lstEmotionResults = new ArrayList();
-        emotionRecognitionManager = new EmotionRecognitionManager();
+        lstEmotionResults = new ArrayList(); //TODO: delete
+        emotionRecognitionAPIManager = new EmotionRecognitionAPIManager();
 
     }
 
@@ -63,6 +63,7 @@ public class EmotionFaceRecognitionManager {
         Log.d("DevDebug", "EmotionFaceRecognitionManager: Emotion face recognition stopped.");
     }
 
+    //TODO:delete
     private void addNewEmotionToList(String newEmotion){
         if(newEmotion != null) {
             lstEmotionResults.add(newEmotion);

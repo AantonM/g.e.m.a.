@@ -8,12 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 import com.cet325.gamers_emotional_state_detection.R;
 import com.cet325.gamers_emotional_state_detection.managers.EmotionFaceRecognitionManager;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class GameplayActivity extends AppCompatActivity {
 
@@ -57,9 +63,22 @@ public class GameplayActivity extends AppCompatActivity {
 
     //TODO:delete
     private void printResult() {
-        TextView txtResult = (TextView) findViewById(R.id.txtEmotionValue);
+        ScrollView scrlView = (ScrollView) findViewById(R.id.scrollResult);
+        TextView txtResult = new TextView(this);
         EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-        txtResult.setText(emotionFaceRecognitionResultsHolder.getEmotionResultForGivenImg().toString());
+        LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> result = emotionFaceRecognitionResultsHolder.getEmotionResultForGivenImg();
+
+        for(Map.Entry<Integer, ArrayList<EmotionValuesDataset>> e : result.entrySet()) {
+            txtResult.append("\n" + "Image number: " + e.getKey() + "\n");
+            for (EmotionValuesDataset set : e.getValue())
+            {
+                txtResult.append(set.getEmotionName() + " : " + set.getEmotionValue() + "\n");
+            }
+        }
+
+        scrlView.addView(txtResult);
+        scrlView.computeScroll();
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 
 import org.json.JSONArray;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.HttpResponse;
@@ -28,10 +30,14 @@ public class EmotionRecognitionApiHandler
 {
     private Bitmap face_picture;
     private byte[] byte64Image;
+    private int pictureId;
+    private ArrayList<EmotionValuesDataset> emotionvaluesdataset;
 
     public String runEmotionalFaceRecognition(Bitmap picture, int pictureId)
     {
-        face_picture = picture;
+        this.face_picture = picture;
+        this.pictureId = pictureId;
+
         String emotionalState = null;
 
         if(face_picture!= null) {
@@ -44,7 +50,7 @@ public class EmotionRecognitionApiHandler
             }
         }
 
-        saveEmotionRecognitionResultToHolder(pictureId, emotionalState);
+//        saveEmotionRecognitionResultToHolder(pictureId, emotionalState);
         return emotionalState;
     }
 
@@ -56,9 +62,9 @@ public class EmotionRecognitionApiHandler
             byte64Image = baos.toByteArray();
     }
 
-    private void saveEmotionRecognitionResultToHolder(int pictureId, String emotionalState) {
+    private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
         EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-        emotionFaceRecognitionResultsHolder.setEmotionResultForGivenImg(pictureId, emotionalState);
+        emotionFaceRecognitionResultsHolder.setEmotionResultForGivenImg(pictureId, emotionalStates);
     }
 
     private class GetEmotionCall extends AsyncTask<Void, Void, String> {
@@ -107,6 +113,9 @@ public class EmotionRecognitionApiHandler
         // this function is called when we get a result from the API call
         @Override
         protected void onPostExecute(String result) {
+            emotionvaluesdataset = new ArrayList<>();
+            EmotionValuesDataset emotionValuesDataset;
+
             JSONArray jsonArray = null;
             try {
                 // convert the string to JSONArray
@@ -119,6 +128,12 @@ public class EmotionRecognitionApiHandler
                     double max = 0;
                     String emotion = "";
                     for (int j = 0; j < scores.names().length(); j++) {
+
+                        //save emotions into an arraylist
+                        emotionValuesDataset = new EmotionValuesDataset(scores.names().getString(j)	,scores.getDouble(scores.names().getString(j)));
+                        emotionvaluesdataset.add(emotionValuesDataset);
+
+                        //calculating the strongest emotion for this picture
                         if (scores.getDouble(scores.names().getString(j)) > max) {
                             max = scores.getDouble(scores.names().getString(j));
                             emotion = scores.names().getString(j);
@@ -126,6 +141,8 @@ public class EmotionRecognitionApiHandler
                     }
                     emotions += emotion + "\n";
                 }
+
+                saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
                 Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotions);
             } catch (JSONException e) {
                 Log.d("DevDebug","EmotionRecognitionApiHandler: No emotion detected. Try again later");
