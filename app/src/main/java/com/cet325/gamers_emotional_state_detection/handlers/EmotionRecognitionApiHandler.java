@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 
@@ -32,26 +33,24 @@ public class EmotionRecognitionApiHandler
     private byte[] byte64Image;
     private int pictureId;
     private ArrayList<EmotionValuesDataset> emotionvaluesdataset;
+    private OnDataSendToGameplayActivity dataSendToActivity;
 
-    public String runEmotionalFaceRecognition(Bitmap picture, int pictureId)
+    public void runEmotionalFaceRecognition(Bitmap picture, int pictureId, OnDataSendToGameplayActivity dataSendToActivity)
     {
+        this.dataSendToActivity = dataSendToActivity;
+
         this.face_picture = picture;
         this.pictureId = pictureId;
-
-        String emotionalState = null;
 
         if(face_picture!= null) {
             encodeToBase64();
             GetEmotionCall emotionCall = new GetEmotionCall();
             try {
-                emotionalState = emotionCall.execute().get();
+                emotionCall.execute();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-//        saveEmotionRecognitionResultToHolder(pictureId, emotionalState);
-        return emotionalState;
     }
 
     // convert image to base 64 so that we can send the image to Emotion API
@@ -68,8 +67,6 @@ public class EmotionRecognitionApiHandler
     }
 
     private class GetEmotionCall extends AsyncTask<Void, Void, String> {
-        GetEmotionCall() {
-        }
 
         // this function is called before the api call is made
         @Override
@@ -110,6 +107,7 @@ public class EmotionRecognitionApiHandler
             }
         }
 
+        //TODO: refractor the Json parsing
         // this function is called when we get a result from the API call
         @Override
         protected void onPostExecute(String result) {
@@ -142,7 +140,12 @@ public class EmotionRecognitionApiHandler
                     emotions += emotion + "\n";
                 }
 
+                //save emotional state result into a holder
                 saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
+
+                //print the result into scroolView
+                dataSendToActivity.sendData();
+
                 Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotions);
             } catch (JSONException e) {
                 Log.d("DevDebug","EmotionRecognitionApiHandler: No emotion detected. Try again later");

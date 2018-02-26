@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 import com.cet325.gamers_emotional_state_detection.R;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GameplayActivity extends AppCompatActivity {
+public class GameplayActivity extends AppCompatActivity implements OnDataSendToGameplayActivity{
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     EmotionFaceRecognitionManager emotionFaceRecognitionManager;
@@ -45,7 +46,7 @@ public class GameplayActivity extends AppCompatActivity {
             return;
         }
 
-        emotionFaceRecognitionManager = new EmotionFaceRecognitionManager(getApplicationContext());
+        emotionFaceRecognitionManager = new EmotionFaceRecognitionManager(this);
         emotionFaceRecognitionManager.startEmotionFaceRecognition();
 
 
@@ -56,29 +57,29 @@ public class GameplayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnStop.setVisibility(View.INVISIBLE);
                 emotionFaceRecognitionManager.stopEmotionFaceRecognition();
-                printResult();
             }
         });
     }
 
-    //TODO:delete
-    private void printResult() {
+    @Override
+    public void sendData()
+    {
         ScrollView scrlView = (ScrollView) findViewById(R.id.scrollResult);
-        TextView txtResult = new TextView(this);
+        TextView txtResult = (TextView) findViewById(R.id.txtResult);
+        txtResult.setText("");
         EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
         LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> result = emotionFaceRecognitionResultsHolder.getEmotionResultForGivenImg();
 
         for(Map.Entry<Integer, ArrayList<EmotionValuesDataset>> e : result.entrySet()) {
-            txtResult.append("\n" + "Image number: " + e.getKey() + "\n");
+            txtResult.append("\n\n\n" + "Image number: " + e.getKey() + "\n");
             for (EmotionValuesDataset set : e.getValue())
             {
                 txtResult.append(set.getEmotionName() + " : " + set.getEmotionValue() + "\n");
             }
         }
 
-        scrlView.addView(txtResult);
         scrlView.computeScroll();
-
+        scrlView.fullScroll(View.FOCUS_DOWN);
     }
 
     @Override

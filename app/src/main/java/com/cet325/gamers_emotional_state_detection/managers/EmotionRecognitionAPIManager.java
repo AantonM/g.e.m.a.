@@ -1,29 +1,33 @@
 package com.cet325.gamers_emotional_state_detection.managers;
 
+import android.app.Activity;
+import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
+import com.cet325.gamers_emotional_state_detection.activities.GameplayActivity;
 import com.cet325.gamers_emotional_state_detection.handlers.EmotionRecognitionApiHandler;
 import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 
 public class EmotionRecognitionAPIManager {
+
     private ImageHolder imageHolder;
     private EmotionRecognitionApiHandler erah;
     private int currentImageHolderSize;
     private boolean thereIsANewImage = false;
+    private OnDataSendToGameplayActivity dataSendToActivity;
 
-    public EmotionRecognitionAPIManager() {
+    public EmotionRecognitionAPIManager(Activity activity) {
         imageHolder = ImageHolder.getInstance();
         currentImageHolderSize = 0;
+
+        dataSendToActivity = (GameplayActivity) activity;
     }
 
-    public String createEmotionRequiest() {
+    public void createEmotionRequiest() {
         thereIsANewImage = checkForNewImage();
         if(thereIsANewImage)
         {
             erah = new EmotionRecognitionApiHandler();
-            String currentEmotion = erah.runEmotionalFaceRecognition(imageHolder.getImages().get(currentImageHolderSize - 1), currentImageHolderSize);
-            return currentEmotion;
+            erah.runEmotionalFaceRecognition(imageHolder.getImages().get(currentImageHolderSize - 1), currentImageHolderSize, dataSendToActivity);
         }
-        return null;
-
     }
 
     private boolean checkForNewImage() {
@@ -37,7 +41,6 @@ public class EmotionRecognitionAPIManager {
             currentImageHolderSize++;
             return true;
         }
-
         return false;
     }
 }
