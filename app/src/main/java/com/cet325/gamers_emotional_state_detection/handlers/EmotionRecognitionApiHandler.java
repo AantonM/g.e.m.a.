@@ -107,7 +107,6 @@ public class EmotionRecognitionApiHandler
             }
         }
 
-        //TODO: refractor the Json parsing
         // this function is called when we get a result from the API call
         @Override
         protected void onPostExecute(String result) {

@@ -148,18 +148,6 @@ public class CameraHandler {
             //Check orientation base on device TODO
             //rotation = getWindowManager().getDefaultDisplay().getRotation();
 
-            File folder = new File(Environment.getExternalStorageDirectory() + "/face_pictures");
-            boolean success = true;
-            if (!folder.exists()) {
-                success = folder.mkdir();
-            }
-
-            if (success) {
-                file = new File(folder + "/" + UUID.randomUUID().toString() + ".jpg");
-            } else {
-                file = new File(Environment.getExternalStorageDirectory() + "/" + UUID.randomUUID().toString() + ".jpg");
-            }
-
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
@@ -172,26 +160,25 @@ public class CameraHandler {
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
                         byte[] bytes = new byte[buffer.capacity()];
                         buffer.get(bytes);
+
                         //***TODO: delete file storage - currently used while developing
                         save(bytes);
                         //***
+
                         bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
-                        //TODO: fix the orientation so despite the phone position the photo is always correct and not rotated
-                        // use  ORIENTATIONS.get(rotation)
+                        // use  ORIENTATIONS.get(rotation) //TODO: fix the orientation so despite the phone position the photo is always correct and not rotated
                         bitmapImage = rotateImage(bitmapImage, 270);
 
                         //Save image to holder object
                         imageHolder.setImage(bitmapImage);
                         Log.d("DevDebug", "CameraHandler: Image holder size:" + imageHolder.getImages().size());
 
-                    //***TODO: delete file storage - currently used while developing
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     } finally {
-                        //***
                         if (image != null) {
                             image.close();
                         }
@@ -200,6 +187,20 @@ public class CameraHandler {
 
                 //***TODO: delete file storage - currently used while developing
                 private void save(byte[] bytes) throws IOException {
+                    File folder = new File(Environment.getExternalStorageDirectory() + "/face_pictures");
+
+                    boolean success = true;
+
+                    if (!folder.exists()) {
+                        success = folder.mkdir();
+                    }
+
+                    if (success) {
+                        file = new File(folder + "/" + UUID.randomUUID().toString() + ".jpg");
+                    } else {
+                        file = new File(Environment.getExternalStorageDirectory() + "/" + UUID.randomUUID().toString() + ".jpg");
+                    }
+
                     OutputStream outputStream = null;
                     try {
                         outputStream = new FileOutputStream(file);
@@ -210,8 +211,9 @@ public class CameraHandler {
                             outputStream.close();
                     }
                 }
+                //***
             };
-            //***
+
 
             reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
             final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
@@ -232,11 +234,9 @@ public class CameraHandler {
                 }
 
                 @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession){}
 
-                }
             }, mBackgroundHandler);
-
 
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -254,6 +254,7 @@ public class CameraHandler {
     private void openCamera() {
         CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         try {
+            //the id of the front-facing camera
             cameraId = manager.getCameraIdList()[1];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
