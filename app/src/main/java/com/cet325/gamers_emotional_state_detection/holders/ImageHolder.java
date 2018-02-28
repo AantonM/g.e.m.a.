@@ -10,21 +10,31 @@ public class ImageHolder {
 
     private static ImageHolder single_instance = null;
 
-    private List<Bitmap> images;
+    private int imageNumber;
+    private Bitmap image;
+//    private List<Bitmap> images;
 
-    public  List<Bitmap> getImages()
+    public int getImageNumber()
     {
-        return images;
+        return imageNumber;
+    }
+
+    public  Bitmap getImage()
+    {
+        return image;
     }
 
     public void setImage(Bitmap image)
     {
-        this.images.add(image);
+
+        this.image = image;
+        imageNumber ++;
     }
 
     private ImageHolder()
     {
-        images = new ArrayList<>();
+        image = null;
+        imageNumber = 0;
     }
 
     public static ImageHolder getInstance()

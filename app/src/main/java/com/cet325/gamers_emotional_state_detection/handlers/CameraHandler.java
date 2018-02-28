@@ -172,7 +172,7 @@ public class CameraHandler {
 
                         //Save image to holder object
                         imageHolder.setImage(bitmapImage);
-                        Log.d("DevDebug", "CameraHandler: Image holder size:" + imageHolder.getImages().size());
+                        Log.d("DevDebug", "CameraHandler: Image holder size:" + imageHolder.getImageNumber());
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();

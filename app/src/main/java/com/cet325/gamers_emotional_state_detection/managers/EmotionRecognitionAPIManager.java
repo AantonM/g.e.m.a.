@@ -11,34 +11,33 @@ public class EmotionRecognitionAPIManager {
     private ImageHolder imageHolder;
     private EmotionRecognitionApiHandler erah;
     private int currentImageHolderSize;
-    private boolean thereIsANewImage = false;
+    private int imageNumber;
     private OnDataSendToGameplayActivity dataSendToActivity;
 
     public EmotionRecognitionAPIManager(Activity activity) {
         imageHolder = ImageHolder.getInstance();
         currentImageHolderSize = 0;
-
+        imageNumber = 0;
         dataSendToActivity = (GameplayActivity) activity;
     }
 
     public void createEmotionRequiest() {
-        thereIsANewImage = checkForNewImage();
-        if(thereIsANewImage)
+        if(thereIsANewImage())
         {
             erah = new EmotionRecognitionApiHandler();
-            erah.runEmotionalFaceRecognition(imageHolder.getImages().get(currentImageHolderSize - 1), currentImageHolderSize, dataSendToActivity);
+            erah.runEmotionalFaceRecognition(imageHolder.getImage(), imageNumber, dataSendToActivity);
         }
     }
 
-    private boolean checkForNewImage() {
+    private boolean thereIsANewImage() {
 
-        if(imageHolder.getImages().size() == currentImageHolderSize) {
+        if(imageHolder.getImageNumber() == imageNumber) {
             //there is NO new image
             return false;
         }
-        else if(imageHolder.getImages().size() > currentImageHolderSize) {
+        else if(imageHolder.getImageNumber() > imageNumber) {
             //there is new image
-            currentImageHolderSize++;
+            imageNumber++;
             return true;
         }
         return false;
