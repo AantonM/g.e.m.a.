@@ -12,7 +12,6 @@ public class ImageHolder {
 
     private int imageNumber;
     private Bitmap image;
-//    private List<Bitmap> images;
 
     public int getImageNumber()
     {
