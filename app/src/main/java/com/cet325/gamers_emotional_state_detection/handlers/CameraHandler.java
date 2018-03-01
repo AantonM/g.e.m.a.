@@ -131,11 +131,12 @@ public class CameraHandler {
                         .getOutputSizes(ImageFormat.JPEG);
 
             //Capture image with custom size
+            //The picture capture is with lowest possible resolution
             int width = 640;
             int height = 480;
             if (jpegSizes != null && jpegSizes.length > 0) {
-                width = jpegSizes[0].getWidth();
-                height = jpegSizes[0].getHeight();
+                width = jpegSizes[jpegSizes.length-1].getWidth();
+                height = jpegSizes[jpegSizes.length-1].getHeight();
             }
             final ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
             List<Surface> outputSurface = new ArrayList<>(2);
