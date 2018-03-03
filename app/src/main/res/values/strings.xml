@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">gamers_emotional_state_detection</string>
+    <string name="app_name">Gamer\'s emotions recognition</string>
     <string name="title_activity_after_action_result">AfterActionResultActivity</string>
 </resources>
