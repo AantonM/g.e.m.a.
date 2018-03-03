@@ -1,6 +1,8 @@
 package com.cet325.gamers_emotional_state_detection.managers;
 
 import android.app.Activity;
+import android.util.Log;
+
 import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
 import com.cet325.gamers_emotional_state_detection.activities.GameplayActivity;
 import com.cet325.gamers_emotional_state_detection.handlers.EmotionRecognitionApiHandler;
@@ -41,5 +43,11 @@ public class EmotionRecognitionAPIManager {
             return true;
         }
         return false;
+    }
+
+    public void stopFacialRecognition()
+    {
+        Log.d("DevDebug", "EmotionRecognitionAPIManager: API recognition stopped.");
+        erah.stopEmotionalFaceRecognition();
     }
 }

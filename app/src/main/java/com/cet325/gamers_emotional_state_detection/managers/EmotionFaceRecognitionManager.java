@@ -58,6 +58,7 @@ public class EmotionFaceRecognitionManager {
 
     public void stopEmotionFaceRecognition() {
         camManager.stopTakingPictures();
+        emotionRecognitionAPIManager.stopFacialRecognition();
         handlerPictures.removeCallbacks(rPictureTaking);
         handlerEmotion.removeCallbacks(rEmotionRecognition);
         Log.d("DevDebug", "EmotionFaceRecognitionManager: Emotion face recognition stopped.");

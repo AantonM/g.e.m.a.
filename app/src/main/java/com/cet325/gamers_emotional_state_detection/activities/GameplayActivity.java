@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
+import com.cet325.gamers_emotional_state_detection.handlers.EmotionRecognitionApiHandler;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 import com.cet325.gamers_emotional_state_detection.R;
+import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 import com.cet325.gamers_emotional_state_detection.managers.EmotionFaceRecognitionManager;
 
 import java.util.ArrayList;
@@ -92,5 +94,20 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        EmotionFaceRecognitionResultsHolder emaHandler =  EmotionFaceRecognitionResultsHolder.getInstance();
+        emaHandler.clean();
+        ImageHolder imgHolder = ImageHolder.getInstance();
+        imgHolder.clean();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        emotionFaceRecognitionManager.stopEmotionFaceRecognition();
+        super.onDestroy();
     }
 }

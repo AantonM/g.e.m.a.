@@ -44,4 +44,9 @@ public class ImageHolder {
         return single_instance;
     }
 
+    public static void clean()
+    {
+        single_instance = null;
+    }
+
 }

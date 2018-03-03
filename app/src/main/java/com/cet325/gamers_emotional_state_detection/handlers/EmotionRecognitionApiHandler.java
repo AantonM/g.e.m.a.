@@ -34,6 +34,7 @@ public class EmotionRecognitionApiHandler
     private int pictureId;
     private ArrayList<EmotionValuesDataset> emotionvaluesdataset;
     private OnDataSendToGameplayActivity dataSendToActivity;
+    private GetEmotionCall emotionCall;
 
     public void runEmotionalFaceRecognition(Bitmap picture, int pictureId, OnDataSendToGameplayActivity dataSendToActivity)
     {
@@ -44,7 +45,7 @@ public class EmotionRecognitionApiHandler
 
         if(face_picture!= null) {
             encodeToBase64();
-            GetEmotionCall emotionCall = new GetEmotionCall();
+            emotionCall = new GetEmotionCall();
             try {
                 emotionCall.execute();
             } catch (Exception e) {
@@ -64,6 +65,11 @@ public class EmotionRecognitionApiHandler
     private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
         EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
         emotionFaceRecognitionResultsHolder.setEmotionResultForGivenImg(pictureId, emotionalStates);
+    }
+
+    public void stopEmotionalFaceRecognition()
+    {
+        emotionCall.cancel(true);
     }
 
     private class GetEmotionCall extends AsyncTask<Void, Void, String> {
