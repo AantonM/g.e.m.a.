@@ -10,19 +10,19 @@ public class EmotionFaceRecognitionResultsHolder {
     private static EmotionFaceRecognitionResultsHolder single_instance = null;
 
 
-    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionResultForGivenImg;
+    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> EmotionFaceRecognitionResults;
 
-    public void setEmotionResultForGivenImg(int imageId, ArrayList<EmotionValuesDataset> emotionsResult) {
-        emotionResultForGivenImg.put(imageId, emotionsResult);
+    public void addNewEmotionResult(int imageId, ArrayList<EmotionValuesDataset> emotionsResult) {
+        EmotionFaceRecognitionResults.put(imageId, emotionsResult);
     }
 
-    public LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> getEmotionResultForGivenImg() {
-        return emotionResultForGivenImg;
+    public LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> getAllEmotionRecognitionResults() {
+        return EmotionFaceRecognitionResults;
     }
 
     private EmotionFaceRecognitionResultsHolder()
     {
-        emotionResultForGivenImg = new LinkedHashMap<>();
+        EmotionFaceRecognitionResults = new LinkedHashMap<>();
     }
 
     public static EmotionFaceRecognitionResultsHolder getInstance()

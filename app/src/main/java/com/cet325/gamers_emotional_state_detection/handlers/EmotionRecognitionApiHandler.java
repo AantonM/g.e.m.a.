@@ -64,7 +64,7 @@ public class EmotionRecognitionApiHandler
 
     private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
         EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-        emotionFaceRecognitionResultsHolder.setEmotionResultForGivenImg(pictureId, emotionalStates);
+        emotionFaceRecognitionResultsHolder.addNewEmotionResult(pictureId, emotionalStates);
     }
 
     public void stopEmotionalFaceRecognition()
@@ -84,33 +84,35 @@ public class EmotionRecognitionApiHandler
         // this function is called when the api call is made
         @Override
         protected String doInBackground(Void... params) {
-            HttpClient httpclient = HttpClients.createDefault();
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
+            if(!isCancelled()) {
+                HttpClient httpclient = HttpClients.createDefault();
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
 
-            try {
-                URIBuilder builder = new URIBuilder("https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize");
+                try {
+                    URIBuilder builder = new URIBuilder("https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize");
 
-                URI uri = builder.build();
-                HttpPost request = new HttpPost(uri);
-                request.setHeader("Content-Type", "application/octet-stream");
-                // enter you subscription key here
-                request.setHeader("Ocp-Apim-Subscription-Key", "b9aca58937cf424ca15ae04a3e4d4fd7");
+                    URI uri = builder.build();
+                    HttpPost request = new HttpPost(uri);
+                    request.setHeader("Content-Type", "application/octet-stream");
+                    // enter you subscription key here
+                    request.setHeader("Ocp-Apim-Subscription-Key", "b9aca58937cf424ca15ae04a3e4d4fd7");
 
-                // Request body.The parameter of setEntity converts the image to base64
-                request.setEntity(new ByteArrayEntity(byte64Image));
+                    // Request body.The parameter of setEntity converts the image to base64
+                    request.setEntity(new ByteArrayEntity(byte64Image));
 
-                // getting a response and assigning it to the string res
-                HttpResponse response = httpclient.execute(request);
-                HttpEntity entity = response.getEntity();
-                String res = EntityUtils.toString(entity);
+                    // getting a response and assigning it to the string res
+                    HttpResponse response = httpclient.execute(request);
+                    HttpEntity entity = response.getEntity();
+                    String res = EntityUtils.toString(entity);
 
-                return res;
+                    return res;
 
+                } catch (Exception e) {
+                    return "null";
+                }
             }
-            catch (Exception e){
-                return "null";
-            }
+            return "null";
         }
 
         // this function is called when we get a result from the API call
@@ -149,7 +151,7 @@ public class EmotionRecognitionApiHandler
                 saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
 
                 //print the result into scroolView
-                dataSendToActivity.sendData();
+                dataSendToActivity.pingActivityNewDataAvailable();
 
                 Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotions);
             } catch (JSONException e) {

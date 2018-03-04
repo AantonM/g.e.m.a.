@@ -154,10 +154,11 @@ public class CameraHandler {
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
+                    Log.d("DevDebug", "onImageAvailable: Picture has been taken");
                     Image image = null;
                     //***TODO: delete file storage - currently used while developing
                     try {
-                        //***s
+                        //***
                         image = reader.acquireLatestImage();
 
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
