@@ -34,5 +34,8 @@
             android:name=".activities.AfterActionResultActivity"
             android:label="Results"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 </manifest>

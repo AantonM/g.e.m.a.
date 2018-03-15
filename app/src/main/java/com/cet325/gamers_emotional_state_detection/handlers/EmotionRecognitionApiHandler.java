@@ -1,8 +1,11 @@
 package com.cet325.gamers_emotional_state_detection.handlers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
@@ -33,6 +36,7 @@ public class EmotionRecognitionApiHandler
     private ArrayList<EmotionValuesDataset> emotionvaluesdataset;
     private OnDataSendToGameplayActivity dataSendToActivity;
     private GetEmotionCall emotionCall;
+    private boolean realtimeResultDisplay;
 
     public void runEmotionalFaceRecognition(Bitmap picture, int pictureId, OnDataSendToGameplayActivity dataSendToActivity)
     {
@@ -40,6 +44,10 @@ public class EmotionRecognitionApiHandler
 
         this.face_picture = picture;
         this.pictureId = pictureId;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences((Context) dataSendToActivity);
+        realtimeResultDisplay = prefs.getBoolean("displayResultsRealtime", false);
+
 
         if(face_picture!= null) {
             encodeToBase64();
@@ -122,7 +130,9 @@ public class EmotionRecognitionApiHandler
                 saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
 
                 //print the result into scroolView
-                dataSendToActivity.pingActivityNewDataAvailable();
+                if(realtimeResultDisplay){
+                    dataSendToActivity.pingActivityNewDataAvailable();
+                }
 
                 Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotionvaluesdataset.toString());
             } catch (Exception e) {
