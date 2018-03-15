@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gamer\'s emotions recognition</string>
+    <string name="app_name">G.E.M.A.</string>
     <string name="title_activity_after_action_result">AfterActionResultActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
 </resources>
