@@ -35,5 +35,4 @@
             android:label="Results"
             android:screenOrientation="portrait" />
     </application>
-
 </manifest>

@@ -8,29 +8,27 @@ import android.util.Log;
 import com.cet325.gamers_emotional_state_detection.datasenders.OnDataSendToGameplayActivity;
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
+import com.microsoft.projectoxford.face.contract.Face;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.client.utils.URIBuilder;
-import cz.msebera.android.httpclient.entity.ByteArrayEntity;
-import cz.msebera.android.httpclient.impl.client.HttpClients;
-import cz.msebera.android.httpclient.util.EntityUtils;
-
+import com.microsoft.projectoxford.face.*;
+import com.microsoft.projectoxford.face.contract.*;
+import com.microsoft.projectoxford.face.rest.ClientException;
 
 public class EmotionRecognitionApiHandler
 {
     private Bitmap face_picture;
-    private byte[] byte64Image;
+    private ByteArrayInputStream sentImage;
     private int pictureId;
     private ArrayList<EmotionValuesDataset> emotionvaluesdataset;
     private OnDataSendToGameplayActivity dataSendToActivity;
@@ -47,7 +45,7 @@ public class EmotionRecognitionApiHandler
             encodeToBase64();
             emotionCall = new GetEmotionCall();
             try {
-                emotionCall.execute();
+                emotionCall.execute(sentImage);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -57,9 +55,9 @@ public class EmotionRecognitionApiHandler
     // convert image to base 64 so that we can send the image to Emotion API
     private void encodeToBase64() {
 
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            face_picture.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
-            byte64Image = baos.toByteArray();
+         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+         face_picture.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+         sentImage = new ByteArrayInputStream(baos.toByteArray());
     }
 
     private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
@@ -72,7 +70,7 @@ public class EmotionRecognitionApiHandler
         emotionCall.cancel(true);
     }
 
-    private class GetEmotionCall extends AsyncTask<Void, Void, String> {
+    private class GetEmotionCall extends AsyncTask<InputStream, String, Face[]> {
 
         // this function is called before the api call is made
         @Override
@@ -83,69 +81,42 @@ public class EmotionRecognitionApiHandler
 
         // this function is called when the api call is made
         @Override
-        protected String doInBackground(Void... params) {
-            if(!isCancelled()) {
-                HttpClient httpclient = HttpClients.createDefault();
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
+        protected Face[] doInBackground(InputStream... params) {
+            FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://westcentralus.api.cognitive.microsoft.com/face/v1.0", "e1078de486574726866bcfebd0f90036");
 
-                try {
-                    URIBuilder builder = new URIBuilder("https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize");
+            // the only attribute wanted is the emotional state - FaceAttributeType.Emotion
+            FaceServiceClient.FaceAttributeType[] expectedFaceAttributes = new FaceServiceClient.FaceAttributeType[]{FaceServiceClient.FaceAttributeType.Emotion};
 
-                    URI uri = builder.build();
-                    HttpPost request = new HttpPost(uri);
-                    request.setHeader("Content-Type", "application/octet-stream");
-                    // enter you subscription key here
-                    request.setHeader("Ocp-Apim-Subscription-Key", "b9aca58937cf424ca15ae04a3e4d4fd7");
-
-                    // Request body.The parameter of setEntity converts the image to base64
-                    request.setEntity(new ByteArrayEntity(byte64Image));
-
-                    // getting a response and assigning it to the string res
-                    HttpResponse response = httpclient.execute(request);
-                    HttpEntity entity = response.getEntity();
-                    String res = EntityUtils.toString(entity);
-
-                    return res;
-
-                } catch (Exception e) {
-                    return "null";
-                }
+            try {
+                //API call
+                return faceServiceClient.detect( params[0], false, false, expectedFaceAttributes );
+            } catch (ClientException e) {
+                Log.e("ClientException", e.toString());
+                return null;
+            } catch (IOException e) {
+                Log.e("IOException", e.toString());
+                e.printStackTrace();
+                return null;
             }
-            return "null";
         }
 
         // this function is called when we get a result from the API call
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Face[] result) {
             emotionvaluesdataset = new ArrayList<>();
-            EmotionValuesDataset emotionValuesDataset;
 
-            JSONArray jsonArray = null;
             try {
-                // convert the string to JSONArray
-                jsonArray = new JSONArray(result);
-                String emotions = "";
-                // get the scores object from the results
-                for(int i = 0;i<jsonArray.length();i++) {
-                    JSONObject jsonObject = new JSONObject(jsonArray.get(i).toString());
-                    JSONObject scores = jsonObject.getJSONObject("scores");
-                    double max = 0;
-                    String emotion = "";
-                    for (int j = 0; j < scores.names().length(); j++) {
 
-                        //save emotions into an arraylist
-                        emotionValuesDataset = new EmotionValuesDataset(scores.names().getString(j)	,scores.getDouble(scores.names().getString(j)));
-                        emotionvaluesdataset.add(emotionValuesDataset);
+                  //save emotions into an arraylist
+                emotionvaluesdataset.add(new EmotionValuesDataset("anger"	,result[0].faceAttributes.emotion.anger));
+                emotionvaluesdataset.add(new EmotionValuesDataset("contempt"	,result[0].faceAttributes.emotion.contempt));
+                emotionvaluesdataset.add(new EmotionValuesDataset("disgust"	,result[0].faceAttributes.emotion.disgust));
+                emotionvaluesdataset.add(new EmotionValuesDataset("fear"	,result[0].faceAttributes.emotion.fear));
+                emotionvaluesdataset.add(new EmotionValuesDataset("happiness"	,result[0].faceAttributes.emotion.happiness));
+                emotionvaluesdataset.add(new EmotionValuesDataset("neutral"	,result[0].faceAttributes.emotion.neutral));
+                emotionvaluesdataset.add(new EmotionValuesDataset("sadness"	,result[0].faceAttributes.emotion.sadness));
+                emotionvaluesdataset.add(new EmotionValuesDataset("surprise"	,result[0].faceAttributes.emotion.surprise));
 
-                        //calculating the strongest emotion for this picture
-                        if (scores.getDouble(scores.names().getString(j)) > max) {
-                            max = scores.getDouble(scores.names().getString(j));
-                            emotion = scores.names().getString(j);
-                        }
-                    }
-                    emotions += emotion + "\n";
-                }
 
                 //save emotional state result into a holder
                 saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
@@ -153,8 +124,8 @@ public class EmotionRecognitionApiHandler
                 //print the result into scroolView
                 dataSendToActivity.pingActivityNewDataAvailable();
 
-                Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotions);
-            } catch (JSONException e) {
+                Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotionvaluesdataset.toString());
+            } catch (Exception e) {
                 Log.d("DevDebug","EmotionRecognitionApiHandler: No emotion detected. Try again later");
             }
         }
