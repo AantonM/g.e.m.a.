@@ -17,7 +17,8 @@
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/txtUserId"
@@ -26,12 +27,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="34dp"
-        android:layout_marginLeft="11dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="11dp"
+        android:layout_marginTop="34dp"
         android:ems="10"
-        android:hint="User ID"
-        android:inputType="textPersonName" />
+        android:hint="User ID (only a-z, A-Z, 0-9 and '_' allowed)"
+        android:inputType="textPersonName"
+        android:digits="0,1,2,3,4,5,6,7,8,9,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM,_"/>
 
     <RadioGroup
         android:id="@+id/rdgGameDifficulty"
@@ -40,7 +42,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtUserId"
-        android:layout_marginLeft="11dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginStart="11dp"
         android:layout_marginTop="15dp" >
 
@@ -57,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Easy"
+            android:text="easy"
             android:textSize="18sp" />
 
         <RadioButton
@@ -65,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Medium"
+            android:text="medium"
             android:textSize="18sp" />
 
         <RadioButton
@@ -73,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hard"
+            android:text="hard"
             android:textSize="18sp" />
     </RadioGroup>
 
@@ -85,6 +87,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/rdgGameDifficulty"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="50dp"
         android:ems="10"
         android:hint="Notes"
@@ -95,9 +98,22 @@
         android:id="@+id/btnStartGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/txtNotes"
+        android:layout_below="@+id/txtNotes"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="32dp"
         android:text="Start Game" />
+
+    <TextView
+        android:id="@+id/txtMissingUserData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnStartGame"
+        android:layout_alignEnd="@+id/txtUserId"
+        android:layout_marginBottom="51dp"
+        android:text="Please insert Usert ID and select game difficulty."
+        android:textColor="#B40021"
+        android:layout_marginLeft="10dp"
+        android:textSize="18sp"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

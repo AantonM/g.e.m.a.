@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
+import com.cet325.gamers_emotional_state_detection.holders.UserDetailsHolders;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,12 +33,16 @@ public class ExportResultsHandler {
     public void exportRawDataToJson() throws JSONException, IOException {
 
         LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionsResultList = EmotionFaceRecognitionResultsHolder.getInstance().getAllEmotionRecognitionResults();
+        UserDetailsHolders userDetailsHolders = UserDetailsHolders.getInstance();
+        String userID = userDetailsHolders.getUserId();
+        String gameDifficulty = userDetailsHolders.getGameDifficulty();
+        String notes = userDetailsHolders.getNotes();
 
         //user details json
         JSONObject jsonUserObject = new JSONObject();
-        jsonUserObject.put("user ID", "example ID");
-        jsonUserObject.put("difficulty", "example difficulty");
-        jsonUserObject.put("notes", "example notes");
+        jsonUserObject.put("user ID", userID);
+        jsonUserObject.put("difficulty", gameDifficulty);
+        jsonUserObject.put("notes", notes);
 
         //all frames results json
         JSONArray jsonFramesArray = new JSONArray();
@@ -64,11 +69,11 @@ public class ExportResultsHandler {
 
         jsonUserObject.put("result", jsonFramesArray);
 
-        saveToFile(jsonUserObject.toString(4));
+        saveToFile(jsonUserObject.toString(4), userID);
 
     }
 
-    private void saveToFile(String resultsDataJson) throws IOException {
+    private void saveToFile(String resultsDataJson, String userID) throws IOException {
 
 
         // Adding the output files into a subfolder inside Downloads - not working
@@ -87,7 +92,7 @@ public class ExportResultsHandler {
         //     fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/results_ID_"+ 1 + ".json");
         // }
 
-        FileWriter fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/results_ID_"+ 1 + ".json");
+        FileWriter fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/results_ID_"+ userID + ".json");
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(resultsDataJson);
         bw.close();
