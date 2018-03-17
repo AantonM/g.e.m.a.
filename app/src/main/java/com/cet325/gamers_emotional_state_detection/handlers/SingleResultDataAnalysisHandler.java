@@ -27,7 +27,7 @@ public class SingleResultDataAnalysisHandler
         for(Iterator<Map.Entry<Integer, ArrayList<EmotionValuesDataset>>> it = emotionsResultList.entrySet().iterator(); it.hasNext(); )
         {
             Map.Entry<Integer, ArrayList<EmotionValuesDataset>> e = it.next();
-            if(e.getValue().size() == 0)
+            if(e.getValue() == null)
             {
                 it.remove();
             }

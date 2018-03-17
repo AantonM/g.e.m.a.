@@ -121,9 +121,12 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
 
         for(Map.Entry<Integer, ArrayList<EmotionValuesDataset>> e : result.entrySet()) {
             txtResult.append("\n\n\n" + "Image number: " + e.getKey() + "\n");
-            for (EmotionValuesDataset set : e.getValue())
-            {
-                txtResult.append(set.getEmotionName() + " : " + set.getEmotionValue() + "\n");
+            if(e.getValue() != null) {
+                for (EmotionValuesDataset set : e.getValue()) {
+                    txtResult.append(set.getEmotionName() + " : " + set.getEmotionValue() + "\n");
+                }
+            }else{
+                txtResult.append("[ ]");
             }
         }
 

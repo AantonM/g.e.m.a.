@@ -68,11 +68,6 @@ public class EmotionRecognitionApiHandler
          sentImage = new ByteArrayInputStream(baos.toByteArray());
     }
 
-    private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
-        EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-        emotionFaceRecognitionResultsHolder.addNewEmotionResult(pictureId, emotionalStates);
-    }
-
     public void stopEmotionalFaceRecognition()
     {
         emotionCall.cancel(true);
@@ -115,30 +110,69 @@ public class EmotionRecognitionApiHandler
 
             try {
 
-                  //save emotions into an arraylist
-                emotionvaluesdataset.add(new EmotionValuesDataset("anger"	,result[0].faceAttributes.emotion.anger));
-                emotionvaluesdataset.add(new EmotionValuesDataset("contempt"	,result[0].faceAttributes.emotion.contempt));
-                emotionvaluesdataset.add(new EmotionValuesDataset("disgust"	,result[0].faceAttributes.emotion.disgust));
-                emotionvaluesdataset.add(new EmotionValuesDataset("fear"	,result[0].faceAttributes.emotion.fear));
-                emotionvaluesdataset.add(new EmotionValuesDataset("happiness"	,result[0].faceAttributes.emotion.happiness));
-                emotionvaluesdataset.add(new EmotionValuesDataset("neutral"	,result[0].faceAttributes.emotion.neutral));
-                emotionvaluesdataset.add(new EmotionValuesDataset("sadness"	,result[0].faceAttributes.emotion.sadness));
-                emotionvaluesdataset.add(new EmotionValuesDataset("surprise"	,result[0].faceAttributes.emotion.surprise));
-
-
-                //save emotional state result into a holder
-                saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
-
-                //print the result into scroolView
-                if(realtimeResultDisplay){
-                    dataSendToActivity.pingActivityNewDataAvailable();
+                if(result.length > 0 && result != null)
+                {
+                    saveEmotionalValues(result);
+                }
+                else if(result.length == 0)
+                {
+                    saveEmptyEmotionalValues();
+                }
+                else if(result == null)
+                {
+                    Log.d("DevDebug","EmotionRecognitionApiHandler: A problem with the API has occured.");
                 }
 
-                Log.d("DevDebug","EmotionRecognitionApiHandler: result -  " + emotionvaluesdataset.toString());
             } catch (Exception e) {
-                Log.d("DevDebug","EmotionRecognitionApiHandler: No emotion detected. Try again later");
+                Log.e("DevDebug", "EmotionRecognitionApiHandler: " + e.toString());
+                Log.d("DevDebug","EmotionRecognitionApiHandler: No emotion detected.");
             }
         }
+
+        private void saveEmotionalValues(Face[] result){
+            emotionvaluesdataset = new ArrayList<>();
+
+            //save emotions into an arraylist
+            emotionvaluesdataset.add(new EmotionValuesDataset("anger", result[0].faceAttributes.emotion.anger));
+            emotionvaluesdataset.add(new EmotionValuesDataset("contempt", result[0].faceAttributes.emotion.contempt));
+            emotionvaluesdataset.add(new EmotionValuesDataset("disgust", result[0].faceAttributes.emotion.disgust));
+            emotionvaluesdataset.add(new EmotionValuesDataset("fear", result[0].faceAttributes.emotion.fear));
+            emotionvaluesdataset.add(new EmotionValuesDataset("happiness", result[0].faceAttributes.emotion.happiness));
+            emotionvaluesdataset.add(new EmotionValuesDataset("neutral", result[0].faceAttributes.emotion.neutral));
+            emotionvaluesdataset.add(new EmotionValuesDataset("sadness", result[0].faceAttributes.emotion.sadness));
+            emotionvaluesdataset.add(new EmotionValuesDataset("surprise", result[0].faceAttributes.emotion.surprise));
+
+
+            //save emotional state result into a holder
+            saveEmotionRecognitionResultToHolder(emotionvaluesdataset);
+
+            //print the result into scroolView
+            if (realtimeResultDisplay) {
+                dataSendToActivity.pingActivityNewDataAvailable();
+            }
+
+            Log.d("DevDebug", "EmotionRecognitionApiHandler: result -  " + emotionvaluesdataset.toString());
+        }
+
+        private void saveEmptyEmotionalValues() {
+            emotionvaluesdataset = new ArrayList<>();
+
+            //save emotional state result into a holder
+            saveEmotionRecognitionResultToHolder(null);
+
+            //print the result into scroolView
+            if (realtimeResultDisplay) {
+                dataSendToActivity.pingActivityNewDataAvailable();
+            }
+
+            Log.d("DevDebug", "EmotionRecognitionApiHandler: No emotion detected. Empty values are set.");
+        }
+
+        private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
+            EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
+            emotionFaceRecognitionResultsHolder.addNewEmotionResult(pictureId, emotionalStates);
+        }
+
     }
 
 }

@@ -94,26 +94,27 @@
         android:inputType="textMultiLine"
         android:maxLines="10"/>
 
-    <Button
-        android:id="@+id/btnStartGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtNotes"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:text="Start Game" />
-
     <TextView
         android:id="@+id/txtMissingUserData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnStartGame"
-        android:layout_alignEnd="@+id/txtUserId"
-        android:layout_marginBottom="51dp"
+        android:layout_marginBottom="40dp"
+        android:layout_below="@+id/txtNotes"
         android:text="Please insert Usert ID and select game difficulty."
         android:textColor="#B40021"
         android:layout_marginLeft="10dp"
         android:textSize="18sp"
         android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/btnStartGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtMissingUserData"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Start Game" />
+
+
 
 </RelativeLayout>

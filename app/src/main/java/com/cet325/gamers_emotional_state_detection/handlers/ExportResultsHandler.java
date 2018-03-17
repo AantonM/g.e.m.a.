@@ -54,11 +54,16 @@ public class ExportResultsHandler {
 
             Map.Entry<Integer, ArrayList<EmotionValuesDataset>> singleFrame = allFramesList.next();
 
-            for (EmotionValuesDataset emotion: singleFrame.getValue())
+            if(singleFrame.getValue() != null) {
+                for (EmotionValuesDataset emotion : singleFrame.getValue()) {
+                    JSONObject jsonEmotionObject = new JSONObject();
+                    jsonEmotionObject.put(emotion.getEmotionName(), emotion.getEmotionValue());
+                    jsonEmotionsArray.put(jsonEmotionObject);
+                }
+            }else
             {
                 JSONObject jsonEmotionObject = new JSONObject();
-                jsonEmotionObject.put(emotion.getEmotionName(), emotion.getEmotionValue());
-                jsonEmotionsArray.put(jsonEmotionObject);
+                jsonEmotionObject.put("[]","[]");
             }
 
             jsonResultsObject.put("frame", singleFrame.getKey());
