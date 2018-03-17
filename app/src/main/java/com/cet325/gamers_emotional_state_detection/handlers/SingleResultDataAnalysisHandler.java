@@ -3,6 +3,7 @@ package com.cet325.gamers_emotional_state_detection.handlers;
 import android.util.Log;
 
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
+import com.cet325.gamers_emotional_state_detection.holders.AnalysedEmotionFaceRecognitionResultsHolder;
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 
 import java.util.ArrayList;
@@ -16,17 +17,16 @@ import java.util.Map;
 public class SingleResultDataAnalysisHandler {
 
     private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionsResultList;
-    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> fusedEmotionsResultList;
+    private AnalysedEmotionFaceRecognitionResultsHolder analysedEmotionFaceRecognitionResultsHolder;
 
     public SingleResultDataAnalysisHandler() {
         emotionsResultList = EmotionFaceRecognitionResultsHolder.getInstance().getAllEmotionRecognitionResults();
+        analysedEmotionFaceRecognitionResultsHolder = AnalysedEmotionFaceRecognitionResultsHolder.getInstance();
     }
 
     public void executeMultyLayerDataFusion() {
 
-        fusedEmotionsResultList = new LinkedHashMap<>();
         removeEmptyValues();
-
         fuzeData();
 
     }
@@ -77,8 +77,9 @@ public class SingleResultDataAnalysisHandler {
                 }
             }
 
-            fusedEmotionsResultList.put(currentFrame.getKey(),fuzedEmotions);
+            analysedEmotionFaceRecognitionResultsHolder.addNewEmotionResult(currentFrame.getKey(), fuzedEmotions);
         }
+
         Log.d("DevDebug:", "SingleResultDataAnalysisHandler: Data has been analysed.");
 
     }
