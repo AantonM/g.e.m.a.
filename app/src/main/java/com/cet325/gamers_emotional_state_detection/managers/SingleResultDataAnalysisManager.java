@@ -14,6 +14,6 @@ public class SingleResultDataAnalysisManager {
 
     public void startAnalysis()
     {
-        singleResultDataAnalysisHandler.removeEmptyValues();
+        singleResultDataAnalysisHandler.executeMultyLayerDataFusion();
     }
 }

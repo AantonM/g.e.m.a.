@@ -15,7 +15,7 @@ public class AfterActionResultActivity extends Activity {
         setContentView(R.layout.activity_after_action_result);
 
         exportRawData();
-//        startDataAnalysis();
+        startDataAnalysis();
     }
 
     private void exportRawData() {
