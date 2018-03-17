@@ -16,6 +16,7 @@ public class AfterActionResultActivity extends Activity {
 
         exportRawData();
         startDataAnalysis();
+        exportAnalysedData();
     }
 
     private void exportRawData() {
@@ -26,6 +27,11 @@ public class AfterActionResultActivity extends Activity {
     private void startDataAnalysis() {
         SingleResultDataAnalysisManager srdaManager = new SingleResultDataAnalysisManager();
         srdaManager.startAnalysis();
+    }
+
+    private void exportAnalysedData() {
+        ExportResultsManager exportResultsManager = new ExportResultsManager();
+        exportResultsManager.exportAnalysedData();
     }
 
 }

@@ -11,11 +11,21 @@ public class ExportResultsManager {
 
     public ExportResultsManager(){}
 
-    public void exportRawData()
-    {
+    public void exportRawData(){
         ExportResultsHandler exportResultsHandler = new ExportResultsHandler();
         try {
             exportResultsHandler.exportRawDataToJson();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportAnalysedData(){
+        ExportResultsHandler exportResultsHandler = new ExportResultsHandler();
+        try {
+            exportResultsHandler.exportAnalysedDataToJson();
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
