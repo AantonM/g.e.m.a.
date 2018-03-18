@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -33,33 +35,19 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
 
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     EmotionFaceRecognitionManager emotionFaceRecognitionManager;
+    Context cntx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
+        cntx = this;
 
         if(!haveNetworkConnection()){
             showNoInternetAllert();
         }else {
-
             startEmotionFaceRecognition();
-
-            //TODO: delete
-            final Button btnStop = (Button) findViewById(R.id.button2);
-            btnStop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    btnStop.setVisibility(View.INVISIBLE);
-                    emotionFaceRecognitionManager.stopEmotionFaceRecognition();
-
-                    Intent afterActionResultIntent = new Intent(v.getContext(), AfterActionResultActivity.class);
-                    afterActionResultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(afterActionResultIntent);
-                }
-            });
-            //************
         }
     }
 
@@ -163,4 +151,28 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
         }
         super.onDestroy();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_gameplay, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+
+        if(id == R.id.btn_stopGameplay) {
+            emotionFaceRecognitionManager.stopEmotionFaceRecognition();
+
+            Intent afterActionResultIntent = new Intent(cntx, AfterActionResultActivity.class);
+            afterActionResultIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(afterActionResultIntent);
+        }
+
+        return true;
+    }
+
 }

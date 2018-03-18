@@ -40,11 +40,4 @@
             android:layout_height="wrap_content" />
     </ScrollView>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollResult"
-        android:layout_centerHorizontal="true"
-        android:text="Stop Emotion Face Recognition" />
 </RelativeLayout>
