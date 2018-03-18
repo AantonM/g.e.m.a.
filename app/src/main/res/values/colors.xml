@@ -3,4 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--Pie chart colours-->
+    <color name="pieColour1">#22BE00</color>
+    <color name="pieColour3">#BE0A00</color>
+    <color name="pieColour4">#3B01BE</color>
+    <color name="pieColour2">#B3BE00</color>
+    <color name="pieColour5">#00AABE</color>
+    <color name="pieColour8">#BE0086</color>
+    <color name="pieColour7">#53BE62</color>
+    <color name="pieColour6">#BE5C5D</color>
+
 </resources>

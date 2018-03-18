@@ -48,6 +48,8 @@ public class EmotionRecognitionAPIManager {
     public void stopFacialRecognition()
     {
         Log.d("DevDebug", "EmotionRecognitionAPIManager: API recognition stopped.");
-        erah.stopEmotionalFaceRecognition();
+        if(erah != null){
+            erah.stopEmotionalFaceRecognition();
+        }
     }
 }
