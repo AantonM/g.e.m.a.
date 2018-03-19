@@ -6,28 +6,37 @@
     tools:context="com.cet325.gamers_emotional_state_detection.activities.HomeActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/homeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Title"
+        android:text="Welcome to \n Gameplayer Emotional Modeling Application"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="59dp"
         tools:layout_editor_absoluteY="25dp" />
 
+    <ImageView
+        android:id="@+id/home_logo"
+        android:layout_below="@+id/homeTitle"
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_gema"/>
+
     <Button
         android:id="@+id/btnPlayGame"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/home_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="30dp"
         android:text="Play game"
         android:textAlignment="center" />
 
@@ -37,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnPlayGame"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="20dp"
         android:text="View results"
         android:textAlignment="center" />
 
