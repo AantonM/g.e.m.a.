@@ -15,8 +15,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,32 +95,52 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
         emotionFaceRecognitionManager = new EmotionFaceRecognitionManager(this);
         emotionFaceRecognitionManager.startEmotionFaceRecognition();
     }
-
+    
     @Override
-    public void pingActivityNewDataAvailable()
+    public void pingActivityNewDataAvailable(ArrayList<EmotionValuesDataset> emotionvaluesdataset)
     {
+        TableRow tableRowVaues = (TableRow) findViewById(R.id.realTimeEmotionsValues);
+        TableRow tableRowError = (TableRow) findViewById(R.id.realTimeEmotionsError);
 
-        //TODO: display only the last results. and delete the holder iteration
-        ScrollView scrlView = (ScrollView) findViewById(R.id.scrollResult);
-        TextView txtResult = (TextView) findViewById(R.id.txtResult);
-        txtResult.setText("");
-        EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-        LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> result = emotionFaceRecognitionResultsHolder.getAllEmotionRecognitionResults();
+        TextView txtEmotionAngryValue = (TextView) findViewById(R.id.txtEmotionAngryValue);
+        TextView txtEmotionContemptValue = (TextView) findViewById(R.id.txtEmotionContemptValue);
+        TextView txtEmotionDisgussedValue = (TextView) findViewById(R.id.txtEmotionDisgussedValue);
+        TextView txtEmotionFearValue = (TextView) findViewById(R.id.txtEmotionFearValue);
+        TextView txtEmotionHappyValue = (TextView) findViewById(R.id.txtEmotionHappyValue);
+        TextView txtEmotionNeutrallValue = (TextView) findViewById(R.id.txtEmotionNeutrallValue);
+        TextView txtEmotionSadValue = (TextView) findViewById(R.id.txtEmotionSadValue);
+        TextView txtEmotionSurprisedValue = (TextView) findViewById(R.id.txtEmotionSurprisedValue);
 
-        for(Map.Entry<Integer, ArrayList<EmotionValuesDataset>> e : result.entrySet()) {
-            txtResult.append("\n\n\n" + "Image number: " + e.getKey() + "\n");
-            if(e.getValue() != null) {
-                for (EmotionValuesDataset set : e.getValue()) {
-                    txtResult.append(set.getEmotionName() + " : " + set.getEmotionValue() + "\n");
+        if(emotionvaluesdataset == null){
+            tableRowVaues.setVisibility(View.INVISIBLE);
+            tableRowError.setVisibility(View.VISIBLE);
+        }else{
+            tableRowVaues.setVisibility(View.VISIBLE);
+            tableRowError.setVisibility(View.INVISIBLE);
+
+            for(EmotionValuesDataset emotion : emotionvaluesdataset){
+
+                switch(emotion.getEmotionName()){
+                    case "anger": txtEmotionAngryValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "contempt": txtEmotionContemptValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "disgust": txtEmotionDisgussedValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "fear": txtEmotionFearValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "happiness": txtEmotionHappyValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "neutral": txtEmotionNeutrallValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "sadness": txtEmotionSadValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
+                    case "surprise": txtEmotionSurprisedValue.setText(String.valueOf(emotion.getEmotionValue()));
+                        break;
                 }
-            }else{
-                txtResult.append("[ ]");
+
             }
         }
-
-        scrlView.computeScroll();
-        scrlView.fullScroll(View.FOCUS_DOWN);
-        //*********************************
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -13,19 +12,13 @@ import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset
 import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 import com.microsoft.projectoxford.face.contract.Face;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.ArrayList;
 
 import com.microsoft.projectoxford.face.*;
-import com.microsoft.projectoxford.face.contract.*;
 import com.microsoft.projectoxford.face.rest.ClientException;
 
 public class EmotionRecognitionApiHandler
@@ -148,7 +141,7 @@ public class EmotionRecognitionApiHandler
 
             //print the result into scroolView
             if (realtimeResultDisplay) {
-                dataSendToActivity.pingActivityNewDataAvailable();
+                dataSendToActivity.pingActivityNewDataAvailable(emotionvaluesdataset);
             }
 
             Log.d("DevDebug", "EmotionRecognitionApiHandler: result -  " + emotionvaluesdataset.toString());
@@ -162,7 +155,7 @@ public class EmotionRecognitionApiHandler
 
             //print the result into scroolView
             if (realtimeResultDisplay) {
-                dataSendToActivity.pingActivityNewDataAvailable();
+                dataSendToActivity.pingActivityNewDataAvailable(null);
             }
 
             Log.d("DevDebug", "EmotionRecognitionApiHandler: No emotion detected. Empty values are set.");

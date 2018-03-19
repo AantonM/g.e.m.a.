@@ -5,39 +5,125 @@
     android:layout_height="match_parent"
     tools:context="com.cet325.gamers_emotional_state_detection.activities.GameplayActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="Game"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/txtEmotionResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="57dp"
-        android:text="Emotion Result:" />
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scrollResult"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/txtEmotionResult"
-        android:layout_marginTop="17dp"
-        android:fillViewport="true"
-        android:scrollbars="vertical"
-        android:visibility="visible">
+        android:layout_height="wrap_content"
+        android:id="@+id/realTimeEmotions"
+        android:paddingRight="10dp"
+        android:stretchColumns="*">
 
-        <TextView
-            android:id="@+id/txtResult"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/ic_angry"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_contempt"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_disgussed"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_fear"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_happy"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_neutral"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_sad"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+            <ImageView
+                android:src="@drawable/ic_surprised"
+                android:layout_width="100px"
+                android:layout_height="100px"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/realTimeEmotionsValues"
+            android:visibility="invisible">
+            <TextView
+                android:id="@+id/txtEmotionAngryValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionContemptValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionDisgussedValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionFearValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionHappyValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionNeutrallValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionSadValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+            <TextView
+                android:id="@+id/txtEmotionSurprisedValue"
+                android:text="0.000"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:maxLength="5"
+                android:inputType="numberDecimal"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/realTimeEmotionsError"
+            android:visibility="invisible">
+            <TextView
+                android:id="@+id/txtErrorMessage"
+                android:gravity="center"
+                android:layout_span="8"
+                android:textSize="20dp"
+                android:text="No face detected."/>
+        </TableRow>
+    </TableLayout>
+
 
 </RelativeLayout>
