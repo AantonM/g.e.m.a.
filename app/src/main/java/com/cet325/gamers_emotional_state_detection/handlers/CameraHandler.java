@@ -279,11 +279,13 @@ public class CameraHandler {
     }
 
     private void stopBackgroundThread() {
-        mBackgroundThread.quitSafely();
         try {
-            mBackgroundThread.join();
-            mBackgroundThread = null;
-            mBackgroundHandler = null;
+            if(mBackgroundThread != null){
+                mBackgroundThread.quitSafely();
+                mBackgroundThread.join();
+                mBackgroundThread = null;
+                mBackgroundHandler = null;
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -5,13 +5,14 @@
     <color name="colorAccent">#FF4081</color>
 
     <!--Pie chart colours-->
-    <color name="pieColour1">#22BE00</color>
-    <color name="pieColour3">#BE0A00</color>
-    <color name="pieColour4">#3B01BE</color>
-    <color name="pieColour2">#B3BE00</color>
-    <color name="pieColour5">#00AABE</color>
+    <color name="pieColour1">#3A8D38</color>
+    <color name="pieColour3">#FF464A</color>
+    <color name="pieColour4">#6B91FF</color>
+    <color name="pieColour2">#C7A100</color>
+    <color name="pieColour5">#3260C0</color>
     <color name="pieColour8">#BE0086</color>
     <color name="pieColour7">#53BE62</color>
     <color name="pieColour6">#BE5C5D</color>
+    <color name="fontColor">#000000</color>
 
 </resources>

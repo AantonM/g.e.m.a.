@@ -1,30 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context="com.cet325.gamers_emotional_state_detection.activities.AfterActionResultActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/vwSingleResults"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Results"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="25dp" />
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:layout_marginTop="20dp"
-        android:id="@+id/piechart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/txtTitleSingleResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Results"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="59dp"
+            tools:layout_editor_absoluteY="25dp" />
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/piechartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/txtTitleSingleResult">
+
+            <TextView
+                android:id="@+id/txtTitlePieChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Summed values of the emotions during the last gameplay."
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piechart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtTitlePieChart"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>
