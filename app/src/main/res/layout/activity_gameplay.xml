@@ -124,6 +124,10 @@
                 android:text="No face detected."/>
         </TableRow>
     </TableLayout>
-
+    <RelativeLayout
+        android:id="@+id/gameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/realTimeEmotions"/>
 
 </RelativeLayout>
