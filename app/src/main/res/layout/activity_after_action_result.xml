@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Summed values of the emotions during the last gameplay."
+                android:text="\u2022 Pie chart diagram representing the summed values of the main emotions during the last gameplay."
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
@@ -53,6 +53,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/txtTitlePieChart"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lineChartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/piechartLayout"
+            android:layout_marginBottom="100dp">
+
+            <TextView
+                android:id="@+id/txtTitleLineChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\u2022 Line diagram representing the emotions detected in each frame during the gameplay (x - frame number, y - emotion value)"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/linechart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtTitleLineChart"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
