@@ -18,6 +18,9 @@ import java.util.Date;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
+    //0-easy, 1-medium, 2-hard
+    int gameDifficulty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 if(dataIsValidAndSaved){
                     Intent userDetailsIntent = new Intent(v.getContext(), GameplayActivity.class);
                     userDetailsIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    userDetailsIntent.putExtra("level_difficulty", gameDifficulty);
                     startActivity(userDetailsIntent);
                 }
             }
@@ -48,7 +52,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         EditText txtNotes = (EditText) findViewById(R.id.txtNotes);
 
 
-        if(txtUserId.getText().equals("") || rgGameDifficulty.getCheckedRadioButtonId() == -1)
+        if(txtUserId.getText().length() == 0 || rgGameDifficulty.getCheckedRadioButtonId() == -1)
         {
             TextView txtError = (TextView) findViewById(R.id.txtMissingUserData) ;
             txtError.setVisibility(View.VISIBLE);
@@ -64,6 +68,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             int radioButtonID = rgGameDifficulty.getCheckedRadioButtonId();
             View radioButton = rgGameDifficulty.findViewById(radioButtonID);
             int idx = rgGameDifficulty.indexOfChild(radioButton);
+            gameDifficulty=idx;
             RadioButton r = (RadioButton)  rgGameDifficulty.getChildAt(idx);
             String gameDifficultyValue = r.getText().toString();
 

@@ -34,7 +34,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     private Context context;
 
     //----Settings--//
-    private int gameSpeed = 4;
+    private int gameSpeed = 4; //default game speed is 4
     private final int BUBLE_DURATION_TIME = 300;
 
 
@@ -110,7 +110,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     private Bitmap bubble;
 
 
-    public Gameplay_PathOfAnth(Context context)//the contrutor
+    public Gameplay_PathOfAnth(Context context, int level_difficulty)//the contrutor
     {
         super(context);//calls the super class contructor and pass it this
         this.context = context;
@@ -122,6 +122,16 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
         y[0] = 0;//y of finger 1
         x[1] = 0;//x of finger 2
         y[1] = 0;//y of finger 2
+
+        switch (level_difficulty){
+            case 1: gameSpeed = 4;
+                break;
+            case 2: gameSpeed = 7;
+                break;
+            case 3: gameSpeed = 12;
+                break;
+        }
+
 
         isRunning = true;
         ourThread = new Thread(this);

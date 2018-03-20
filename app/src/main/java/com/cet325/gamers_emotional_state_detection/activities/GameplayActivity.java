@@ -41,6 +41,7 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
     EmotionFaceRecognitionManager emotionFaceRecognitionManager;
     Gameplay_PathOfAnth game;
     Context cntx;
+    int gameDifficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -104,7 +105,10 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
 
 
     private void startGame() {
-        game = new Gameplay_PathOfAnth(this);
+        Intent intent = getIntent();
+        int level_difficulty = intent.getIntExtra("level_difficulty",0);
+
+        game = new Gameplay_PathOfAnth(this,level_difficulty);
         game.setOnTouchListener(this);
 
         RelativeLayout gameLayout = (RelativeLayout) findViewById(R.id.gameLayout);
@@ -195,6 +199,15 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
 
     @Override
     public void onBackPressed() {
+
+        if(emotionFaceRecognitionManager!=null) {
+            emotionFaceRecognitionManager.stopEmotionFaceRecognition();
+        }
+
+        if(game != null){
+            game.stop();
+        }
+
         HolderCleanerManager holderCleanerManager = new HolderCleanerManager();
         holderCleanerManager.cleanHolders();
 
@@ -214,7 +227,6 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
         }
         super.onDestroy();
     }
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
