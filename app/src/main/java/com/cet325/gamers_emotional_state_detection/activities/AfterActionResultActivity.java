@@ -1,5 +1,6 @@
 package com.cet325.gamers_emotional_state_detection.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import com.cet325.gamers_emotional_state_detection.R;
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
 import com.cet325.gamers_emotional_state_detection.holders.AnalysedEmotionFaceRecognitionResultsHolder;
+import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
 import com.cet325.gamers_emotional_state_detection.managers.ExportResultsManager;
+import com.cet325.gamers_emotional_state_detection.managers.HolderCleanerManager;
 import com.cet325.gamers_emotional_state_detection.managers.SingleResultDataAnalysisManager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -104,8 +107,17 @@ public class AfterActionResultActivity extends AppCompatActivity {
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
         l.setTextSize(TEXT_SIZE);
+    }
 
+    @Override
+    public void onBackPressed() {
+        HolderCleanerManager holderCleanerManager = new HolderCleanerManager();
+        holderCleanerManager.cleanHolders();
 
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }
 

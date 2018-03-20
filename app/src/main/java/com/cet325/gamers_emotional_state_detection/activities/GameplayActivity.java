@@ -29,6 +29,7 @@ import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitio
 import com.cet325.gamers_emotional_state_detection.R;
 import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 import com.cet325.gamers_emotional_state_detection.managers.EmotionFaceRecognitionManager;
+import com.cet325.gamers_emotional_state_detection.managers.HolderCleanerManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -194,8 +195,8 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
 
     @Override
     public void onBackPressed() {
-        EmotionFaceRecognitionResultsHolder emaHandler =  EmotionFaceRecognitionResultsHolder.getInstance();
-        emaHandler.clean();
+        HolderCleanerManager holderCleanerManager = new HolderCleanerManager();
+        holderCleanerManager.cleanHolders();
         super.onBackPressed();
     }
 
