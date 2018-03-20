@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.cet325.gamers_emotional_state_detection.R;
 import com.cet325.gamers_emotional_state_detection.holders.UserDetailsHolders;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserDetailsActivity extends AppCompatActivity {
 
     @Override
@@ -67,8 +70,12 @@ public class UserDetailsActivity extends AppCompatActivity {
             //Get notes value
             String notes = txtNotes.getText().toString();
 
+            //Get timestamp
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date());
+
+
             UserDetailsHolders userDetailsHolders = UserDetailsHolders.getInstance();
-            userDetailsHolders.setUserDetails(userId, gameDifficultyValue, notes);
+            userDetailsHolders.setUserDetails(userId, gameDifficultyValue, notes,timeStamp);
 
             return true;
         }

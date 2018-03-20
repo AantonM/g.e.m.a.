@@ -34,12 +34,15 @@ public class ExportResultsHandler {
         String userID = userDetailsHolders.getUserId();
         String gameDifficulty = userDetailsHolders.getGameDifficulty();
         String notes = userDetailsHolders.getNotes();
+        String timestamp = userDetailsHolders.getTimestamp();
 
         //user details json
         JSONObject jsonUserObject = new JSONObject();
         jsonUserObject.put("user ID", userID);
         jsonUserObject.put("difficulty", gameDifficulty);
         jsonUserObject.put("notes", notes);
+        jsonUserObject.put("timestamp",timestamp);
+
 
         //all frames results json
         JSONArray jsonFramesArray = new JSONArray();
@@ -69,7 +72,7 @@ public class ExportResultsHandler {
 
         jsonUserObject.put("result", jsonFramesArray);
 
-        saveToFile(jsonUserObject.toString(4), userID, false);
+        saveToFile(jsonUserObject.toString(4), userID, timestamp, false);
 
     }
 
@@ -81,12 +84,14 @@ public class ExportResultsHandler {
         String userID = userDetailsHolders.getUserId();
         String gameDifficulty = userDetailsHolders.getGameDifficulty();
         String notes = userDetailsHolders.getNotes();
+        String timestamp = userDetailsHolders.getTimestamp();
 
         //user details json
         JSONObject jsonUserObject = new JSONObject();
         jsonUserObject.put("user ID", userID);
         jsonUserObject.put("difficulty", gameDifficulty);
         jsonUserObject.put("notes", notes);
+        jsonUserObject.put("timestamp", timestamp);
 
         //summed emotions values results
         JSONArray jsonSummedEmotionValuesArray = new JSONArray();
@@ -125,11 +130,11 @@ public class ExportResultsHandler {
 
         jsonUserObject.put("result", jsonFramesArray);
 
-        saveToFile(jsonUserObject.toString(4), userID, true);
+        saveToFile(jsonUserObject.toString(4), userID, timestamp, true);
     }
 
 
-    private void saveToFile(String resultsDataJson, String userID, boolean isDataAnalysed) throws IOException {
+    private void saveToFile(String resultsDataJson, String userID, String timestamp, boolean isDataAnalysed) throws IOException {
 
         FileWriter fw;
 
@@ -142,18 +147,17 @@ public class ExportResultsHandler {
 
         if(success){
             if(isDataAnalysed){
-                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/GEMA_output/analysed_results_ID_" + userID + ".json");
+                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/GEMA_output/analysed_results_" + userID + "_" + timestamp + ".json");
             }else{
-                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/GEMA_output/results_ID_" + userID + ".json");
+                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/GEMA_output/raw_results_" + userID + "_" + timestamp + ".json");
             }
         }else{
             if(isDataAnalysed){
-                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/analysed_results_ID_" + userID + ".json");
+                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/analysed_results_" + userID + "_" + timestamp + ".json");
             }else{
-                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/results_ID_" + userID + ".json");
+                fw = new FileWriter(Environment.getExternalStorageDirectory() + "/Download/raw_results_" + userID + "_" + timestamp + ".json");
             }
         }
-
 
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(resultsDataJson);

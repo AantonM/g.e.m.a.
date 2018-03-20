@@ -7,11 +7,13 @@ public class UserDetailsHolders {
     private String userId;
     private String gameDifficulty;
     private String notes;
+    private String timestamp;
 
-    public void setUserDetails(String userId, String gameDifficulty, String notes){
+    public void setUserDetails(String userId, String gameDifficulty, String notes, String timestamp){
         this.userId = userId;
         this.gameDifficulty = gameDifficulty;
         this.notes = notes;
+        this.timestamp = timestamp;
     }
 
     public String getUserId(){
@@ -26,10 +28,15 @@ public class UserDetailsHolders {
         return notes;
     }
 
+    public String getTimestamp(){
+        return timestamp;
+    }
+
     private UserDetailsHolders(){
         userId = null;
         gameDifficulty = null;
         notes = null;
+        timestamp = null;
     }
 
     public static UserDetailsHolders getInstance()
