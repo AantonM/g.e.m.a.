@@ -47,6 +47,9 @@ public class HomeActivity extends AppCompatActivity {
 
             //By default the realtime display of results is enabled.
             prefs.edit().putBoolean("displayResultsRealtime", true).apply();
+
+            //Vibration settings
+            prefs.edit().putBoolean("vibration", true).apply();
         }
     }
 

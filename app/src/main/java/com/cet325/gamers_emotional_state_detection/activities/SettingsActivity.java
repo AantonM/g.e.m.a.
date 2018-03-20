@@ -24,20 +24,31 @@ public class SettingsActivity extends AppCompatActivity {
 
         Switch realTimeResultsSwitch = (Switch) findViewById(R.id.switchRealTimeResults);
 
+
         if(prefs.getBoolean("displayResultsRealtime", true)){
             realTimeResultsSwitch.setChecked(true);
         }else{
             realTimeResultsSwitch.setChecked(false);
         }
 
-        realTimeResultsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+        Switch vibrationSwitch = (Switch) findViewById(R.id.switchVibration);
+
+        if(prefs.getBoolean("vibration", true)){
+            vibrationSwitch.setChecked(true);
+        }else{
+            vibrationSwitch.setChecked(false);
+        }
+
+        vibrationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(prefs.getBoolean("displayResultsRealtime", true)){
-                    prefs.edit().putBoolean("displayResultsRealtime", false).apply();
-                    Log.d("DevDebug", "Settings: Realtime displaying of results is turned off");
+                if(prefs.getBoolean("vibration", true)){
+                    prefs.edit().putBoolean("vibration", false).apply();
+                    Log.d("DevDebug", "Settings: Vibration is turned off");
                 }else{
-                    prefs.edit().putBoolean("displayResultsRealtime", true).apply();
-                    Log.d("DevDebug", "Settings: Realtime displaying of results is turned on");
+                    prefs.edit().putBoolean("vibration", true).apply();
+                    Log.d("DevDebug", "Settings: Vibration is turned on");
                 }
             }
         });

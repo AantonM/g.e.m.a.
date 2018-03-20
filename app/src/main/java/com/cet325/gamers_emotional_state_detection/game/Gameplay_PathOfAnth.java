@@ -7,6 +7,7 @@ August 1 2014
 package com.cet325.gamers_emotional_state_detection.game;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -36,7 +38,8 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     //----Settings--//
     private int gameSpeed = 4; //default game speed is 4
     private final int BUBLE_DURATION_TIME = 300;
-
+    private SharedPreferences prefs;
+    private boolean vibration;
 
     private Random random = new Random();
     //-----touch controls---//
@@ -46,7 +49,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     private boolean fingerDown[] = new boolean[4];//if that finger is touching (gets up to 4 touches)
     private boolean fingerMoving[] = new boolean[4];//if that finger is touching AND MOVING (gets up to 4 touches)
 
-    private Vibrator v;//the vibrator object needed to vibrarte the phone
+    private Vibrator vibrator;//the vibrator object needed to vibrarte the phone
 
     //below are some variables that are self descriptive of what they represent
     private int gameStartTimerPauser = 0;
@@ -116,6 +119,9 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
         this.context = context;
         ourHolder = getHolder();//we get our holder (our canvas)
         onPlayGame = true;
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        vibration = prefs.getBoolean("vibration", true);
 
         //because this application requires only single touches (sometimes 2), we will have 2 that will be working
         x[0] = 0;//x of finger 1
@@ -154,7 +160,6 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
             xCalculationsDone = true;
         }
         return (int) (dp * xfinalValue);//then we basically take my drawings's x-cooridinate and times it by the current scale of the phone to get the actual x-coodinate on this phone
-
     }
 
     //This method is an exact copy of the one above, expect this is for the y-variabbles
@@ -531,10 +536,12 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
                     } else if (allMaps[4].checkOnRoad((int) antX, (int) antY)) {
                     } else if (allMaps[5].checkOnRoad((int) antX, (int) antY)) {
                     } else {//if not, then we vibrate the phone
-                        v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                        v.vibrate(500);//vibrate for 800 miliseconds
-                        v = null;//make this null (makes game faster as we eliminate ram space)
-                        score -= 2;
+                        if(vibration) {
+                            vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            vibrator.vibrate(500);//vibrate for 800 miliseconds
+                            vibrator = null;//make this null (makes game faster as we eliminate ram space)
+                        }
+                        score -= 5;
                     }
                 }
 

@@ -32,4 +32,15 @@
         android:text="Displaying of the results in realtime"
         android:switchPadding="20dp"/>
 
+    <Switch
+        android:id="@+id/switchVibration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/switchRealTimeResults"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="Vibration"
+        android:switchPadding="20dp"/>
+
+
 </RelativeLayout>
