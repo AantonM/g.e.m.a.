@@ -197,13 +197,14 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
     public void onBackPressed() {
         HolderCleanerManager holderCleanerManager = new HolderCleanerManager();
         holderCleanerManager.cleanHolders();
-        super.onBackPressed();
+
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
     protected void onDestroy() {
-        ImageHolder imgHolder = ImageHolder.getInstance();
-        imgHolder.clean();
         if(emotionFaceRecognitionManager!=null) {
             emotionFaceRecognitionManager.stopEmotionFaceRecognition();
         }

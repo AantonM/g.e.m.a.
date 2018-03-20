@@ -117,7 +117,6 @@ public class AfterActionResultActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        super.onBackPressed();
     }
 }
 

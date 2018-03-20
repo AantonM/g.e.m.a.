@@ -33,6 +33,11 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
 
     private Context context;
 
+    //----Settings--//
+    private int gameSpeed = 4;
+    private final int BUBLE_DURATION_TIME = 300;
+
+
     private Random random = new Random();
     //-----touch controls---//
     private float x[] = new float[4];//x position of touches (gets up to 4 touches)
@@ -44,7 +49,6 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     private Vibrator v;//the vibrator object needed to vibrarte the phone
 
     //below are some variables that are self descriptive of what they represent
-    private int gameSpeed = 4;
     private int gameStartTimerPauser = 0;
     private int gameTimeRecorder = 0;
     private int backgroundY = 0;
@@ -74,6 +78,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     private boolean yCalculationsDone = false;
     private boolean xCalculationsDone = false;
 
+    //----Map scale--//
     private int scale = 5;//how many decimals there will be when taking the accuracy of the phone's resolution
     private BigDecimal num1;//to carry a lot of decimals, not applicabe in ordinary double types
     private BigDecimal num2;//same thing as above for another variable
@@ -91,22 +96,17 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
 
     private map theTopestMap;
 
-
     private Paint paint;
 
     //----------ALL Pictures-----------//
     private Bitmap restrictedRectangle[] = new Bitmap[10]; //for the pictures that are in array is becaus ethere are 10 different sizes of that picture
     private Bitmap restrictedEllipse[] = new Bitmap[10];
-
     private Bitmap roadHorizontalRect[] = new Bitmap[10];
     private Bitmap roadVerticalRect[] = new Bitmap[10];
     private Bitmap roadEllipse[] = new Bitmap[10];
-
     private Bitmap antSprites[] = new Bitmap[3];
-
     private Bitmap menuScreenPic;
     private Bitmap backgroundPic;
-
     private Bitmap bubble;
 
 
@@ -460,16 +460,14 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
                 canvas.drawBitmap(antSprites[antSpriteCounter], antX - Math.round((dpToPx(30)) / 2), antY - Math.round((dpToPxY(40)) / 2), paint);
 
                 //Drawing bubble at the beggining of the game
-                if (gameTimeRecorder < 70) {
+                if (gameTimeRecorder < BUBLE_DURATION_TIME) {
                     canvas.drawBitmap(bubble, antX - Math.round((dpToPx(30)) / 2) - dpToPx(5), antY - Math.round((dpToPxY(40)) / 2) - dpToPxY(5), paint);
                 }
 
-
-
-                    /*
-                     * Below we basically set the y position of each map by taking it's current position and adding the game speed  to move it down
-                     * This is done to each of the map
-                     */
+               /*
+                * Below we basically set the y position of each map by taking it's current position and adding the game speed  to move it down
+                * This is done to each of the map
+                */
                 allMaps[0].setYPositionOfMap(allMaps[0].getYPositionOfMap() + gameSpeed);
                 allMaps[1].setYPositionOfMap(allMaps[1].getYPositionOfMap() + gameSpeed);
                 allMaps[2].setYPositionOfMap(allMaps[2].getYPositionOfMap() + gameSpeed);
@@ -478,14 +476,11 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
                 allMaps[5].setYPositionOfMap(allMaps[5].getYPositionOfMap() + gameSpeed);
 
 
-
-                    /*
-                     * Below we basically see if the maps have gone below the screen
-                     * if they have, we basically make them go on top of the screen, so they can be repeated again
-                     * This is just a way to repeat the maps from top to bottom
-                     */
-
-
+                /*
+                 * Below we basically see if the maps have gone below the screen
+                 * if they have, we basically make them go on top of the screen, so they can be repeated again
+                 * This is just a way to repeat the maps from top to bottom
+                 */
                 if (allMaps[0].getYPositionOfMap() > dpToPxY(533) + 10) {
                     allMaps[0].setYPositionOfMap(theTopestMap.getYPositionOfMap() - allMaps[0].getHeight());
                     theTopestMap = allMaps[0];
@@ -518,7 +513,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
 
 
                 //Validating is user is off track
-                if (gameTimeRecorder > 80) { //don't trigger during the bubble time
+                if (gameTimeRecorder > BUBLE_DURATION_TIME) { //don't trigger during the bubble time
                     if (allMaps[0].checkOnRoad((int) antX, (int) antY)) {//then we check if his finger is on any map's road
                     } else if (allMaps[1].checkOnRoad((int) antX, (int) antY)) {
                     } else if (allMaps[2].checkOnRoad((int) antX, (int) antY)) {
