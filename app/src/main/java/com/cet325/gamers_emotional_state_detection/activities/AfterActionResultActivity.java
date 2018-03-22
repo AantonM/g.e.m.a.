@@ -38,6 +38,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import org.w3c.dom.Text;
 
@@ -97,12 +98,13 @@ public class AfterActionResultActivity extends AppCompatActivity {
 
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
-        for (Map.Entry<String, Double> emotionResultSet : results.getSummedEmotionValues().entrySet()) {
+        for (Map.Entry<String, Double> emotionResultSet : results.getPercentageOfMainEmotionValues().entrySet()) {
             pieChartEntries.add(new PieEntry( emotionResultSet.getValue().floatValue(), emotionResultSet.getKey()));
         }
 
         PieDataSet set = new PieDataSet(pieChartEntries, " ");
         PieData data = new PieData(set);
+        data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(TEXT_SIZE);
         data.setValueTextColor(getResources().getColor(R.color.fontColor));
         mChart.setData(data);

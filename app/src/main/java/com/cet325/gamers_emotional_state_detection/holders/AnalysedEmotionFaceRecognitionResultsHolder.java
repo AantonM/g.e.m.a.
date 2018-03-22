@@ -6,6 +6,7 @@ import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AnalysedEmotionFaceRecognitionResultsHolder {
     private static AnalysedEmotionFaceRecognitionResultsHolder single_instance = null;
@@ -43,6 +44,25 @@ public class AnalysedEmotionFaceRecognitionResultsHolder {
         return summedEmotionValues;
     }
 
+    public HashMap<String, Double> getPercentageOfMainEmotionValues()
+    {
+        HashMap<String, Double> resultInPercentage = new HashMap<>();
+
+        Double summedEmotionValue = 0.0;
+
+        for (Map.Entry<String, Double> firstEntry : summedEmotionValues.entrySet())
+        {
+            summedEmotionValue += firstEntry.getValue();
+        }
+
+        for (Map.Entry<String, Double> secondEntry : summedEmotionValues.entrySet())
+        {
+           Double percentage = (secondEntry.getValue() * 100) / summedEmotionValue;
+            resultInPercentage.put(secondEntry.getKey(), percentage);
+        }
+
+        return resultInPercentage;
+    }
 
     public static AnalysedEmotionFaceRecognitionResultsHolder getInstance()
     {
