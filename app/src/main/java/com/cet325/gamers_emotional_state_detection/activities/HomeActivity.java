@@ -50,6 +50,9 @@ public class HomeActivity extends AppCompatActivity {
 
             //Vibration settings
             prefs.edit().putBoolean("vibration", true).apply();
+
+            //Display timestamps
+            prefs.edit().putBoolean("timestamp", true).apply();
         }
     }
 

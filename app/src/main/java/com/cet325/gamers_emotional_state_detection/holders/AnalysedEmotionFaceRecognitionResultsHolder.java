@@ -10,17 +10,30 @@ import java.util.LinkedHashMap;
 public class AnalysedEmotionFaceRecognitionResultsHolder {
     private static AnalysedEmotionFaceRecognitionResultsHolder single_instance = null;
 
-    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> EmotionFaceRecognitionResults;
+    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionFaceRecognitionResults;
+    private LinkedHashMap<Integer, String> timestampList;
 
     private HashMap<String, Double> summedEmotionValues;
 
-    public void addNewEmotionResult(int imageId, ArrayList<EmotionValuesDataset> emotionsResult) {
-        EmotionFaceRecognitionResults.put(imageId, emotionsResult);
+    private AnalysedEmotionFaceRecognitionResultsHolder()
+    {
+        emotionFaceRecognitionResults = new LinkedHashMap<>();
+        timestampList = new LinkedHashMap<>();
+    }
+
+    public void addNewEmotionResult(int imageId, ArrayList<EmotionValuesDataset> emotionsResult, String timestamp) {
+        emotionFaceRecognitionResults.put(imageId, emotionsResult);
+        timestampList.put(imageId, timestamp);
     }
 
     public LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> getAllAnalysedEmotionRecognitionResults() {
-        return EmotionFaceRecognitionResults;
+        return emotionFaceRecognitionResults;
     }
+
+    public String getTimestampForGivenImageID(int imageId) {
+        return timestampList.get(imageId);
+    }
+
 
     public void setSummedEmotionValues(HashMap<String, Double> summedEmotionValues){
         this.summedEmotionValues = summedEmotionValues;
@@ -30,11 +43,6 @@ public class AnalysedEmotionFaceRecognitionResultsHolder {
         return summedEmotionValues;
     }
 
-
-    private AnalysedEmotionFaceRecognitionResultsHolder()
-    {
-        EmotionFaceRecognitionResults = new LinkedHashMap<>();
-    }
 
     public static AnalysedEmotionFaceRecognitionResultsHolder getInstance()
     {

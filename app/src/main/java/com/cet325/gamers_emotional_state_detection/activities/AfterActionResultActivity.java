@@ -1,8 +1,10 @@
 package com.cet325.gamers_emotional_state_detection.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -37,6 +39,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -46,11 +50,15 @@ import java.util.Map;
 public class AfterActionResultActivity extends AppCompatActivity {
 
     private final Float TEXT_SIZE = 15f;
+    private boolean showTimestamps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_action_result);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        showTimestamps = prefs.getBoolean("timestamp", true);
 
         exportRawData();
         startDataAnalysis();
@@ -123,6 +131,7 @@ public class AfterActionResultActivity extends AppCompatActivity {
 
     private void displayLineChart() {
         AnalysedEmotionFaceRecognitionResultsHolder results  = AnalysedEmotionFaceRecognitionResultsHolder.getInstance();
+
 
         if (results.getAllAnalysedEmotionRecognitionResults().size() == 0){
            return;
@@ -208,11 +217,13 @@ public class AfterActionResultActivity extends AppCompatActivity {
                 neutralValues.add(new Entry(frameNumber,neutralEmotionValue));
                 sadnessValues.add(new Entry(frameNumber,sadnessEmotionValue));
                 surpriseValues.add(new Entry(frameNumber,surpriseEmotionValue));
+
+                if(showTimestamps){
+                    displayTimeStamp(frameNumber,results.getTimestampForGivenImageID(singleFrame.getKey()));
+                }
             }
 
         }
-
-
 
         LineDataSet angerSet, contemptSet, disgustSet, fearSet, happinessSet, neutralSet, sadnessSet, surpriseSet;
         angerSet = new LineDataSet(angerValues, "angry");
@@ -245,6 +256,13 @@ public class AfterActionResultActivity extends AppCompatActivity {
         LineData data = new LineData(angerSet, contemptSet, disgustSet, fearSet, happinessSet, neutralSet, sadnessSet, surpriseSet);
         data.setValueTextSize(TEXT_SIZE);
         lineChart.setData(data);
+    }
+
+    private void displayTimeStamp(int frameId, String timestamp) {
+        TextView timestamps = (TextView) findViewById(R.id.txtFramesTimestamp);
+
+        timestamps.append("Frame " + String.valueOf(frameId) + ":   " + timestamp + "\n");
+
     }
 
     @Override

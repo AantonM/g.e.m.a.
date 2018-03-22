@@ -159,6 +159,8 @@ public class CameraHandler {
                     //***TODO: delete file storage - currently used while developing
                     try {
                         //***
+
+
                         image = reader.acquireLatestImage();
 
                         ByteBuffer buffer = image.getPlanes()[0].getBuffer();
@@ -171,7 +173,6 @@ public class CameraHandler {
 
                         bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
-                        // use  ORIENTATIONS.get(rotation) //TODO: fix the orientation so despite the phone position the photo is always correct and not rotated
                         bitmapImage = rotateImage(bitmapImage, 270);
 
                         //Save image to holder object

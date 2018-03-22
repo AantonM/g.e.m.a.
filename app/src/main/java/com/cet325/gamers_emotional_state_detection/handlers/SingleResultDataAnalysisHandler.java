@@ -17,12 +17,14 @@ import java.util.Map;
 
 public class SingleResultDataAnalysisHandler {
 
+    private EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder;
     private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionsResultList;
     private AnalysedEmotionFaceRecognitionResultsHolder analysedEmotionFaceRecognitionResultsHolder;
     HashMap<String, Double> emotionValuesHM;
 
     public SingleResultDataAnalysisHandler() {
-        emotionsResultList = EmotionFaceRecognitionResultsHolder.getInstance().getAllEmotionRecognitionResults();
+        emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
+        emotionsResultList = emotionFaceRecognitionResultsHolder.getAllEmotionRecognitionResults();
         analysedEmotionFaceRecognitionResultsHolder = AnalysedEmotionFaceRecognitionResultsHolder.getInstance();
         emotionValuesHM = new HashMap<>();
     }
@@ -84,7 +86,9 @@ public class SingleResultDataAnalysisHandler {
                 }
             }
 
-            analysedEmotionFaceRecognitionResultsHolder.addNewEmotionResult(currentFrame.getKey(), fuzedEmotions);
+            String currentFrameTimestamp = emotionFaceRecognitionResultsHolder.getTimestampForGivenImageID(currentFrame.getKey());
+
+            analysedEmotionFaceRecognitionResultsHolder.addNewEmotionResult(currentFrame.getKey(), fuzedEmotions, currentFrameTimestamp);
         }
 
         analysedEmotionFaceRecognitionResultsHolder.setSummedEmotionValues(emotionValuesHM);

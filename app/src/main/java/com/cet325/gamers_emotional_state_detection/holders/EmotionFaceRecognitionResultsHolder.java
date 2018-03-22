@@ -10,19 +10,27 @@ public class EmotionFaceRecognitionResultsHolder {
     private static EmotionFaceRecognitionResultsHolder single_instance = null;
 
 
-    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> EmotionFaceRecognitionResults;
+    private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionFaceRecognitionResults;
+    private LinkedHashMap<Integer, String> timestampList;
 
-    public void addNewEmotionResult(int imageId, ArrayList<EmotionValuesDataset> emotionsResult) {
-        EmotionFaceRecognitionResults.put(imageId, emotionsResult);
-    }
-
-    public LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> getAllEmotionRecognitionResults() {
-        return EmotionFaceRecognitionResults;
-    }
 
     private EmotionFaceRecognitionResultsHolder()
     {
-        EmotionFaceRecognitionResults = new LinkedHashMap<>();
+        emotionFaceRecognitionResults = new LinkedHashMap<>();
+        timestampList = new LinkedHashMap<>();
+    }
+
+    public void addNewEmotionResult(int imageId, ArrayList<EmotionValuesDataset> emotionsResult,String timestamp) {
+        emotionFaceRecognitionResults.put(imageId, emotionsResult);
+        timestampList.put(imageId, timestamp);
+    }
+
+    public LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> getAllEmotionRecognitionResults() {
+        return emotionFaceRecognitionResults;
+    }
+
+    public String getTimestampForGivenImageID(int imageId) {
+        return timestampList.get(imageId);
     }
 
     public static EmotionFaceRecognitionResultsHolder getInstance()

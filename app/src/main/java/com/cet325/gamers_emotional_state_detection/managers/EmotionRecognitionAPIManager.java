@@ -27,7 +27,7 @@ public class EmotionRecognitionAPIManager {
         if(thereIsANewImage())
         {
             erah = new EmotionRecognitionApiHandler();
-            erah.runEmotionalFaceRecognition(imageHolder.getImage(), imageNumber, dataSendToActivity);
+            erah.runEmotionalFaceRecognition(imageHolder.getImage(), imageNumber, imageHolder.getTimestamp(), dataSendToActivity);
         }
     }
 

@@ -26,17 +26,20 @@ public class EmotionRecognitionApiHandler
     private Bitmap face_picture;
     private ByteArrayInputStream sentImage;
     private int pictureId;
+    private String timestamp;
+
     private ArrayList<EmotionValuesDataset> emotionvaluesdataset;
     private OnDataSendToGameplayActivity dataSendToActivity;
     private GetEmotionCall emotionCall;
     private boolean realtimeResultDisplay;
 
-    public void runEmotionalFaceRecognition(Bitmap picture, int pictureId, OnDataSendToGameplayActivity dataSendToActivity)
+    public void runEmotionalFaceRecognition(Bitmap picture, int pictureId, String timestamp, OnDataSendToGameplayActivity dataSendToActivity)
     {
         this.dataSendToActivity = dataSendToActivity;
 
         this.face_picture = picture;
         this.pictureId = pictureId;
+        this.timestamp = timestamp;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences((Context) dataSendToActivity);
         realtimeResultDisplay = prefs.getBoolean("displayResultsRealtime", false);
@@ -163,7 +166,7 @@ public class EmotionRecognitionApiHandler
 
         private void saveEmotionRecognitionResultToHolder(ArrayList<EmotionValuesDataset> emotionalStates) {
             EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-            emotionFaceRecognitionResultsHolder.addNewEmotionResult(pictureId, emotionalStates);
+            emotionFaceRecognitionResultsHolder.addNewEmotionResult(pictureId, emotionalStates, timestamp);
         }
 
     }

@@ -45,7 +45,7 @@
                 android:layout_marginTop="20dp"
                 android:text="\u2022 Pie chart diagram representing the summed values of the main emotions during the last gameplay."
                 android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                android:textSize="20sp" />
 
 
             <com.github.mikephil.charting.charts.PieChart
@@ -64,8 +64,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="50dp"
             android:layout_marginRight="10dp"
-            android:layout_below="@+id/piechartLayout"
-            android:layout_marginBottom="100dp">
+            android:layout_below="@+id/piechartLayout">
 
             <TextView
                 android:id="@+id/txtTitleLineChart"
@@ -73,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="\u2022 Line diagram representing the emotions detected in each frame during the gameplay (x - frame number, y - emotion value)"
                 android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                android:textSize="20sp" />
 
 
             <com.github.mikephil.charting.charts.LineChart
@@ -84,6 +83,25 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtFramesTimestamp"
+            android:layout_below="@+id/lineChartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/btmMargin"
+            android:layout_below="@+id/txtFramesTimestamp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text=" "
+            android:layout_marginBottom="100dp"/>
 
     </RelativeLayout>
 </ScrollView>

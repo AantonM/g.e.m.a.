@@ -25,7 +25,7 @@ public class EmotionFaceRecognitionManager {
                 Log.d("DevDebug", "EmotFaceRecognitionMngr: Take picture called.");
                 camManager.startTakingPictures();
             } finally {
-                handlerPictures.postDelayed(rPictureTaking, 5000);
+                handlerPictures.postDelayed(rPictureTaking, 3000);
             }
         }
     };
@@ -38,7 +38,7 @@ public class EmotionFaceRecognitionManager {
                 Log.d("DevDebug", "EmotFaceRecognitionMngr: Emotion recognition called.");
                 emotionRecognitionAPIManager.createEmotionRequiest();
             } finally {
-                handlerEmotion.postDelayed(rEmotionRecognition, 1000);
+                handlerEmotion.postDelayed(rEmotionRecognition, 200);
             }
         }
     };

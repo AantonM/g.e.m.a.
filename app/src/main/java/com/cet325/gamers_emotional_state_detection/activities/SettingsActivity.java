@@ -31,7 +31,17 @@ public class SettingsActivity extends AppCompatActivity {
             realTimeResultsSwitch.setChecked(false);
         }
 
-
+        realTimeResultsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(prefs.getBoolean("displayResultsRealtime", true)){
+                    prefs.edit().putBoolean("displayResultsRealtime", false).apply();
+                    Log.d("DevDebug", "Settings: Realtime displaying of results is turned off");
+                }else{
+                    prefs.edit().putBoolean("displayResultsRealtime", true).apply();
+                    Log.d("DevDebug", "Settings: Realtime displaying of results is turned on");
+                }
+            }
+        });
 
         Switch vibrationSwitch = (Switch) findViewById(R.id.switchVibration);
 
@@ -48,7 +58,28 @@ public class SettingsActivity extends AppCompatActivity {
                     Log.d("DevDebug", "Settings: Vibration is turned off");
                 }else{
                     prefs.edit().putBoolean("vibration", true).apply();
-                    Log.d("DevDebug", "Settings: Vibration is turned on");
+                    Log.d("DevDebug", "Settings: Realtime displaying of results is turned on");
+                }
+            }
+        });
+
+
+        Switch timestampSwitch = (Switch) findViewById(R.id.switchTimestamp);
+
+        if(prefs.getBoolean("timestamp", true)){
+            timestampSwitch.setChecked(true);
+        }else{
+            timestampSwitch.setChecked(false);
+        }
+
+        timestampSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(prefs.getBoolean("timestamp", true)){
+                    prefs.edit().putBoolean("timestamp", false).apply();
+                    Log.d("DevDebug", "Settings: Timestamp displaying in results is turned off");
+                }else{
+                    prefs.edit().putBoolean("timestamp", true).apply();
+                    Log.d("DevDebug", "Settings: Timestamp displaying in results is turned on");
                 }
             }
         });
