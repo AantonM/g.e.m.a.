@@ -76,7 +76,9 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if(id == R.id.btn_about) {
-            Toast.makeText(HomeActivity.this, "To be implemented...", Toast.LENGTH_SHORT).show();
+            Intent aboutIntent = new Intent(this, AboutActivity.class);
+            aboutIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(aboutIntent);
         }
         return true;
     }

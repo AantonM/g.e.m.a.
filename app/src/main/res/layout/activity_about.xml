@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AboutActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtAboutTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="About G.E.M.A."
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="59dp"
+            tools:layout_editor_absoluteY="25dp" />
+
+        <TextView
+            android:id="@+id/txtAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtAboutTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="    Gameplayer Emotional Modeling Application (G.E.M.A.) is an application that captures and analyses the emotional state of a game player through his/her facial expressions. The application does not store any photo or videos. As soon as the photos of the user's face are captured and analyzed they are deleted from everywhere."
+            android:textAlignment="textStart"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtAbout"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="    Currently the application is using an open source game called 'Path of Anth' developed by a person with an username: zunair-syed. Available at: https://github.com/zunair-syed/Path_of_Ants"
+            android:textAlignment="textStart"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtEmojiDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtGame"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="    The following emojis has been used withing the application, and bellow are described the emotional states associated with them."
+            android:textAlignment="textStart"
+            android:textSize="20sp" />
+
+        <TableLayout
+            android:id="@+id/tblEmoji"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txtEmojiDescription"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_angry"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Anger"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_contempt"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Contempt"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_disgussed"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Disgussed"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_fear"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Fear"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_happy"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Happy"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_neutral"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Neutral"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_sad"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Sad"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:src="@drawable/ic_surprised"
+                    android:layout_width="100px"
+                    android:layout_height="100px"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="100px"
+                    android:gravity="center_vertical"
+                    android:text="Surprised"
+                    android:textSize="20sp"
+                    android:paddingLeft="20dp"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/txtAboutDev"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tblEmoji"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:text="    This application has been developed by Anton Mitkov as part of the Computer Science program  of the Univeristy of Sunderland. \n\n This project is available at: \n https://github.com/AantonM"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"
+            android:textColor="#000000"/>
+
+    </RelativeLayout>
+</ScrollView>
