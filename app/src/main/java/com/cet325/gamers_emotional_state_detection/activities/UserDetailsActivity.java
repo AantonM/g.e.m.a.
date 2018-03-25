@@ -1,8 +1,8 @@
 package com.cet325.gamers_emotional_state_detection.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +16,23 @@ import com.cet325.gamers_emotional_state_detection.holders.UserDetailsHolders;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * An activity responsible for the UserDetails page
+ * <p>
+ * layout - activity_user_details
+ */
 public class UserDetailsActivity extends AppCompatActivity {
 
-    //0-easy, 1-medium, 2-hard
-    int gameDifficulty;
+    //1-easy, 2-medium, 3-hard
+    private int gameDifficulty;
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +45,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 boolean dataIsValidAndSaved = validateAndSaveInputData();
 
-                if(dataIsValidAndSaved){
+                if (dataIsValidAndSaved) {
                     Intent userDetailsIntent = new Intent(v.getContext(), GameplayActivity.class);
                     userDetailsIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     userDetailsIntent.putExtra("level_difficulty", gameDifficulty);
@@ -43,6 +55,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Validate user input details and save into a holder (UserDetailsHolders)
+     *
+     * @return
+     */
     private boolean validateAndSaveInputData() {
 
         boolean userDetailsIsEmpty = false;
@@ -52,14 +69,13 @@ public class UserDetailsActivity extends AppCompatActivity {
         EditText txtNotes = (EditText) findViewById(R.id.txtNotes);
 
 
-        if(txtUserId.getText().length() == 0 || rgGameDifficulty.getCheckedRadioButtonId() == -1)
-        {
-            TextView txtError = (TextView) findViewById(R.id.txtMissingUserData) ;
+        if (txtUserId.getText().length() == 0 || rgGameDifficulty.getCheckedRadioButtonId() == -1) {
+            TextView txtError = (TextView) findViewById(R.id.txtMissingUserData);
             txtError.setVisibility(View.VISIBLE);
             userDetailsIsEmpty = true;
         }
 
-        if(!userDetailsIsEmpty){
+        if (!userDetailsIsEmpty) {
 
             //Get user ID value
             String userId = txtUserId.getText().toString();
@@ -68,8 +84,8 @@ public class UserDetailsActivity extends AppCompatActivity {
             int radioButtonID = rgGameDifficulty.getCheckedRadioButtonId();
             View radioButton = rgGameDifficulty.findViewById(radioButtonID);
             int idx = rgGameDifficulty.indexOfChild(radioButton);
-            gameDifficulty=idx;
-            RadioButton r = (RadioButton)  rgGameDifficulty.getChildAt(idx);
+            gameDifficulty = idx;
+            RadioButton r = (RadioButton) rgGameDifficulty.getChildAt(idx);
             String gameDifficultyValue = r.getText().toString();
 
             //Get notes value
@@ -80,7 +96,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
 
             UserDetailsHolders userDetailsHolders = UserDetailsHolders.getInstance();
-            userDetailsHolders.setUserDetails(userId, gameDifficultyValue, notes,timeStamp);
+            userDetailsHolders.setUserDetails(userId, gameDifficultyValue, notes, timeStamp);
 
             return true;
         }

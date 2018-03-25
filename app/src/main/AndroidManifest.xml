@@ -33,7 +33,7 @@
             android:label="Game"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.AfterActionResultActivity"
+            android:name=".activities.ResultsActivity"
             android:label="Results"
             android:screenOrientation="portrait" />
         <activity

@@ -3,11 +3,11 @@ package com.cet325.gamers_emotional_state_detection.holders;
 import android.graphics.Bitmap;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-//Singleton
+/**
+ * Singleton holder object that stores the image taken from the camera
+ */
 public class ImageHolder {
 
     private static ImageHolder single_instance = null;
@@ -16,45 +16,67 @@ public class ImageHolder {
     private Bitmap image;
     private String timestamp;
 
-    public int getImageNumber()
-    {
+    /**
+     * Method that returns the id of the current frame
+     *
+     * @return int: image id
+     */
+    public int getImageNumber() {
         return imageNumber;
     }
 
-    public  Bitmap getImage()
-    {
+    /**
+     * Method that returns the stored image.
+     *
+     * @return Bitmap: the image
+     */
+    public Bitmap getImage() {
         return image;
     }
 
-    public  String getTimestamp()
-    {
+    /**
+     * Method that returns the timestamp of the stored image.
+     *
+     * @return String: timestamp
+     */
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setImage(Bitmap image)
-    {
+    /**
+     * Method that stores a new image and sets an image id
+     */
+    public void setImage(Bitmap image) {
 
         this.image = image;
-        imageNumber ++;
+        imageNumber++;
         this.timestamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
     }
 
-    private ImageHolder()
-    {
+    /**
+     * Constructor that initialises the fields where the data will be saved.
+     */
+    private ImageHolder() {
         image = null;
         imageNumber = 0;
     }
 
-    public static ImageHolder getInstance()
-    {
+    /**
+     * Method that initialises the singleton object.
+     *
+     * @return ImageHolder: the current instance of the object
+     */
+    public static ImageHolder getInstance() {
         if (single_instance == null)
             single_instance = new ImageHolder();
 
         return single_instance;
     }
 
-    public static void clean()
-    {
+    /**
+     * Clear the holder object
+     */
+    public static void clean() {
         single_instance = null;
     }
 

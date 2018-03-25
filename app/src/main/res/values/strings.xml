@@ -1,6 +1,63 @@
 <resources>
     <string name="app_name">G.E.M.A.</string>
-    <string name="title_activity_after_action_result">AfterActionResultActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!--About page-->
     <string name="title_activity_about">AboutActivity</string>
+    <string name="about_g_e_m_a">About G.E.M.A.</string>
+    <string name="about1">Gameplayer Emotional Modeling Application (G.E.M.A.) is an application that captures and analyses the emotional state of a game player through his/her facial expressions. The application does not store any photo or videos. As soon as the photos of the user\'s face are captured and analyzed they are deleted from everywhere.</string>
+    <string name="about2">Currently the application is using an open source game called \'Path of Anth\' developed by a person with an username: zunair-syed. Available at: https://github.com/zunair-syed/Path_of_Ants</string>
+    <string name="about_emoji">The following emojis has been used within the application, and bellow are described the emotional states associated with them.</string>
+    <string name="about_anger">Anger</string>
+    <string name="about_disgust">Disgust</string>
+    <string name="about_contempt">Contempt</string>
+    <string name="about_fear">Fear</string>
+    <string name="about_happy">Happy</string>
+    <string name="about_neutral">Neutral</string>
+    <string name="about_surprised">Surprised</string>
+    <string name="about_sad">Sad</string>
+    <string name="about_me">This application has been developed by Anton Mitkov as part of the Computer Science program of the University of Sunderland.    This project is available at:   https://github.com/AantonM</string>
+
+    <!--Gameplay page-->
+    <string name="default_emotion_value">0.000</string>
+    <string name="no_face_detected">No face detected.</string>
+    <string name="angry">Angry</string>
+    <string name="contempt">Contempt</string>
+    <string name="disgust">Disgust</string>
+    <string name="fear">Fear</string>
+    <string name="happy">Happy</string>
+    <string name="neutral">Neutral</string>
+    <string name="sad">Sad</string>
+    <string name="surprised">Surprised</string>
+
+    <!--Home page-->
+    <string name="home_welcome">Welcome to \n Gameplayer Emotional Modeling Application</string>
+    <string name="btn_text_home">Play game</string>
+    <string name="home_logo">Home_logo</string>
+
+    <!-- Results page-->
+    <string name="title_activity_after_action_result">ResultActivity</string>
+    <string name="results_title">Results</string>
+    <string name="pie_chart_description">• Pie chart diagram representing the summed values of the main emotions during the last gameplay.</string>
+    <string name="line_chart_description">• Line diagram representing the emotions detected in each frame during the gameplay (x - frame number, y - emotion value)</string>
+    <string name="btm_spacing" />
+
+    <!--User details page-->
+    <string name="user_details_title">User details</string>
+    <string name="hint_user_id">User ID (only a&#8211;z, A&#8211;Z, 0&#8211;9 and \'_\' allowed)</string>
+    <string name="game_difficulty_rbn_title">Game difficulty</string>
+    <string name="rb_easy">easy</string>
+    <string name="rb_medium">medium</string>
+    <string name="rb_hard">hard</string>
+    <string name="notes">Notes</string>
+    <string name="error_msg_user_input">Please insert Usert ID and select game difficulty.</string>
+    <string name="btn_user_details_start">Start Game</string>
+
+    <!--Settings-->
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="settings_title">Settings</string>
+    <string name="displaying_of_the_results_in_realtime">Displaying of the results in realtime</string>
+    <string name="vibration">Vibration</string>
+    <string name="show_timestamp_of_the_frames_in_the_result_screen">Show timestamp of the frames in the Result screen.</string>
+
+    <string name="about">About</string>
 </resources>

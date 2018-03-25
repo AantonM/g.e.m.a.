@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:orientation="vertical"
-    tools:context="com.cet325.gamers_emotional_state_detection.activities.AfterActionResultActivity">
+    tools:context="com.cet325.gamers_emotional_state_detection.activities.ResultsActivity">
 
     <RelativeLayout
         android:id="@+id/vwSingleResults"
@@ -21,7 +21,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Results"
+            android:text="@string/results_title"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="30sp"
@@ -34,16 +34,16 @@
             android:id="@+id/piechartLayout"
             android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:layout_below="@+id/txtTitleSingleResult"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/txtTitleSingleResult">
+            android:layout_marginRight="10dp">
 
             <TextView
                 android:id="@+id/txtTitlePieChart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="\u2022 Pie chart diagram representing the summed values of the main emotions during the last gameplay."
+                android:text="@string/pie_chart_description"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/txtTitlePieChart"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
 
@@ -61,16 +61,16 @@
             android:id="@+id/lineChartLayout"
             android:layout_width="match_parent"
             android:layout_height="500dp"
+            android:layout_below="@+id/piechartLayout"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="50dp"
             android:layout_marginRight="10dp"
-            android:layout_below="@+id/piechartLayout">
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:id="@+id/txtTitleLineChart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="\u2022 Line diagram representing the emotions detected in each frame during the gameplay (x - frame number, y - emotion value)"
+                android:text="@string/line_chart_description"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
 
@@ -80,28 +80,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/txtTitleLineChart"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/txtFramesTimestamp"
-            android:layout_below="@+id/lineChartLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/lineChartLayout"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:text=""
             android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:gravity="center"
-            android:layout_marginTop="20dp"/>
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/btmMargin"
-            android:layout_below="@+id/txtFramesTimestamp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text=" "
-            android:layout_marginBottom="100dp"/>
+            android:layout_below="@+id/txtFramesTimestamp"
+            android:layout_marginBottom="100dp"
+            android:text="@string/btm_spacing" />
 
     </RelativeLayout>
 </ScrollView>

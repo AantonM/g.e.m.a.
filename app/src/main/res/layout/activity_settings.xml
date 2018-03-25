@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Settings"
+        android:text="@string/settings_title"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="30sp"
@@ -29,8 +29,8 @@
         android:layout_below="@+id/txtSettingsTitle"
         android:layout_marginStart="10dp"
         android:layout_marginTop="100dp"
-        android:text="Displaying of the results in realtime"
-        android:switchPadding="20dp"/>
+        android:switchPadding="20dp"
+        android:text="@string/displaying_of_the_results_in_realtime" />
 
     <Switch
         android:id="@+id/switchVibration"
@@ -39,8 +39,8 @@
         android:layout_below="@+id/switchRealTimeResults"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:text="Vibration"
-        android:switchPadding="20dp"/>
+        android:switchPadding="20dp"
+        android:text="@string/vibration" />
 
     <Switch
         android:id="@+id/switchTimestamp"
@@ -49,8 +49,8 @@
         android:layout_below="@+id/switchVibration"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:text="Show timestamp of the frames in the Result screen."
-        android:switchPadding="20dp"/>
+        android:switchPadding="20dp"
+        android:text="@string/show_timestamp_of_the_frames_in_the_result_screen" />
 
 
 </RelativeLayout>

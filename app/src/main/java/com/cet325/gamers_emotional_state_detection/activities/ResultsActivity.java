@@ -2,62 +2,59 @@ package com.cet325.gamers_emotional_state_detection.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import com.cet325.gamers_emotional_state_detection.R;
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
-import com.cet325.gamers_emotional_state_detection.holders.AnalysedEmotionFaceRecognitionResultsHolder;
-import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
+import com.cet325.gamers_emotional_state_detection.holders.AnalysedFacialEmotionRecognitionResultsHolder;
 import com.cet325.gamers_emotional_state_detection.managers.ExportResultsManager;
 import com.cet325.gamers_emotional_state_detection.managers.HolderCleanerManager;
 import com.cet325.gamers_emotional_state_detection.managers.SingleResultDataAnalysisManager;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AfterActionResultActivity extends AppCompatActivity {
+/**
+ * {@inheritDoc}
+ * <p>
+ * An activity responsible for the results page.
+ * <p>
+ * layout - activity_results
+ */
+public class ResultsActivity extends AppCompatActivity {
 
     private final Float TEXT_SIZE = 15f;
-    private boolean showTimestamps;
+    private boolean showTimestamps; //from preferences
 
+    /***
+     * Initial method called during the creation of the activity.
+     * Checks the preferences and calls the method to analyse, export and display the data.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_after_action_result);
+        setContentView(R.layout.activity_results);
 
+        //Check if displaying timestamps is enabled
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         showTimestamps = prefs.getBoolean("timestamp", true);
 
@@ -67,41 +64,64 @@ public class AfterActionResultActivity extends AppCompatActivity {
         displayAnalysedData();
     }
 
+    /**
+     * Export unanalysied raw data into Json file, by using ExportResultsManager.
+     */
     private void exportRawData() {
         ExportResultsManager exportResultsManager = new ExportResultsManager();
         exportResultsManager.exportRawData();
     }
 
+    /**
+     * Call SingleResultDataAnalysisManager to analyse the result data.
+     */
     private void startDataAnalysis() {
         SingleResultDataAnalysisManager srdaManager = new SingleResultDataAnalysisManager();
         srdaManager.startAnalysis();
     }
 
+    /**
+     * Export analysied data into Json file, by using ExportResultsManager.
+     */
     private void exportAnalysedData() {
         ExportResultsManager exportResultsManager = new ExportResultsManager();
         exportResultsManager.exportAnalysedData();
     }
 
+    /**
+     * Display the analysied data on the screen.
+     */
     private void displayAnalysedData() {
-        try{
+        try {
             displayPieChart();
             displayLineChart();
-        }catch (Exception e){
-            Log.d("AfterActionResultActivity","Displaying charts exception: " + e);
+        } catch (Exception e) {
+            Log.d("ResultActivity", "Displaying charts exception: " + e);
         }
     }
 
+    /**
+     * Display the analysed data from the holder into a piechart (id-piechart)
+     */
     private void displayPieChart() {
-        AnalysedEmotionFaceRecognitionResultsHolder results  = AnalysedEmotionFaceRecognitionResultsHolder.getInstance();
+        //Get the holder that holder of the analysed results
+        AnalysedFacialEmotionRecognitionResultsHolder results = AnalysedFacialEmotionRecognitionResultsHolder.getInstance();
+
+        //check if there is data to be displayed
+        if (results.getPercentageOfMainEmotionValues().size() == 0) {
+            return;
+        }
 
         PieChart mChart = (PieChart) findViewById(R.id.piechart);
 
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
+        //for each percentage record withing the holder object create a new entry for the pie chart
         for (Map.Entry<String, Double> emotionResultSet : results.getPercentageOfMainEmotionValues().entrySet()) {
-            pieChartEntries.add(new PieEntry( emotionResultSet.getValue().floatValue(), emotionResultSet.getKey()));
+            pieChartEntries.add(new PieEntry(emotionResultSet.getValue().floatValue(), emotionResultSet.getKey()));
         }
 
+        //format the pic chart
         PieDataSet set = new PieDataSet(pieChartEntries, " ");
         PieData data = new PieData(set);
         data.setValueFormatter(new PercentFormatter());
@@ -122,6 +142,7 @@ public class AfterActionResultActivity extends AppCompatActivity {
         mChart.getDescription().setEnabled(false);
         mChart.invalidate();
 
+        //format the legend below the pie chart
         Legend l = mChart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
@@ -130,18 +151,21 @@ public class AfterActionResultActivity extends AppCompatActivity {
         l.setTextSize(TEXT_SIZE);
     }
 
-
+    /**
+     * Display the analysed data from the holder into a linechart (id-linechart)
+     */
     private void displayLineChart() {
-        AnalysedEmotionFaceRecognitionResultsHolder results  = AnalysedEmotionFaceRecognitionResultsHolder.getInstance();
+        //Get the holder that holder of the analysed results
+        AnalysedFacialEmotionRecognitionResultsHolder results = AnalysedFacialEmotionRecognitionResultsHolder.getInstance();
 
-
-        if (results.getAllAnalysedEmotionRecognitionResults().size() == 0){
-           return;
+        //check if there is data to be displayed
+        if (results.getAllAnalysedEmotionRecognitionResults().size() == 0) {
+            return;
         }
 
 
+        //format the cahrt
         LineChart lineChart = (LineChart) findViewById(R.id.linechart);
-
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -150,8 +174,11 @@ public class AfterActionResultActivity extends AppCompatActivity {
         Legend l = lineChart.getLegend();
         l.setTextSize(TEXT_SIZE);
 
+        //counter of the records, each record represents a frame
+        //after data clean up the number of frames might be non sequentially
         int frameNumber = 0;
 
+        //Create a new list of entryis for each emotion (new line on the chart)
         ArrayList<Entry> angerValues = new ArrayList<>();
         ArrayList<Entry> contemptValues = new ArrayList<>();
         ArrayList<Entry> disgustValues = new ArrayList<>();
@@ -161,6 +188,7 @@ public class AfterActionResultActivity extends AppCompatActivity {
         ArrayList<Entry> sadnessValues = new ArrayList<>();
         ArrayList<Entry> surpriseValues = new ArrayList<>();
 
+        //For each frame get a list of the emotions and their values
         for (Iterator<Map.Entry<Integer, ArrayList<EmotionValuesDataset>>> allFramesList = results.getAllAnalysedEmotionRecognitionResults().entrySet().iterator(); allFramesList.hasNext(); ) {
             Map.Entry<Integer, ArrayList<EmotionValuesDataset>> singleFrame = allFramesList.next();
 
@@ -175,7 +203,10 @@ public class AfterActionResultActivity extends AppCompatActivity {
 
             frameNumber++;
 
-            for(EmotionValuesDataset singleEmotion : singleFrame.getValue()){
+            //iterate the emotions and add the list of entries.
+            for (EmotionValuesDataset singleEmotion : singleFrame.getValue()) {
+
+                //default value of the emotions
                 angerEmotionValue = 0;
                 contemptEmotionValue = 0;
                 disgustEmotionValue = 0;
@@ -185,8 +216,8 @@ public class AfterActionResultActivity extends AppCompatActivity {
                 sadnessEmotionValue = 0;
                 surpriseEmotionValue = 0;
 
-                switch (singleEmotion.getEmotionName()){
-                    case "anger" :
+                switch (singleEmotion.getEmotionName()) {
+                    case "anger":
                         angerEmotionValue = (float) singleEmotion.getEmotionValue().floatValue();
                         break;
                     case "contempt":
@@ -211,22 +242,24 @@ public class AfterActionResultActivity extends AppCompatActivity {
                         surpriseEmotionValue = (float) singleEmotion.getEmotionValue().floatValue();
                         break;
                 }
-                angerValues.add(new Entry(frameNumber,angerEmotionValue));
-                contemptValues.add(new Entry(frameNumber,contemptEmotionValue));
-                disgustValues.add(new Entry(frameNumber,disgustEmotionValue));
-                fearValues.add(new Entry(frameNumber,fearEmotionValue));
-                happinessValues.add(new Entry(frameNumber,happinessEmotionValue));
-                neutralValues.add(new Entry(frameNumber,neutralEmotionValue));
-                sadnessValues.add(new Entry(frameNumber,sadnessEmotionValue));
-                surpriseValues.add(new Entry(frameNumber,surpriseEmotionValue));
+                angerValues.add(new Entry(frameNumber, angerEmotionValue));
+                contemptValues.add(new Entry(frameNumber, contemptEmotionValue));
+                disgustValues.add(new Entry(frameNumber, disgustEmotionValue));
+                fearValues.add(new Entry(frameNumber, fearEmotionValue));
+                happinessValues.add(new Entry(frameNumber, happinessEmotionValue));
+                neutralValues.add(new Entry(frameNumber, neutralEmotionValue));
+                sadnessValues.add(new Entry(frameNumber, sadnessEmotionValue));
+                surpriseValues.add(new Entry(frameNumber, surpriseEmotionValue));
 
-                if(showTimestamps){
-                    displayTimeStamp(frameNumber,results.getTimestampForGivenImageID(singleFrame.getKey()));
+                //display the timestamp of each frame
+                if (showTimestamps) {
+                    displayTimeStamp(frameNumber, results.getTimestampForGivenImageID(singleFrame.getKey()));
                 }
             }
 
         }
 
+        //append the list of entried to the dataset
         LineDataSet angerSet, contemptSet, disgustSet, fearSet, happinessSet, neutralSet, sadnessSet, surpriseSet;
         angerSet = new LineDataSet(angerValues, "angry");
         contemptSet = new LineDataSet(contemptValues, "contempt");
@@ -237,6 +270,7 @@ public class AfterActionResultActivity extends AppCompatActivity {
         sadnessSet = new LineDataSet(sadnessValues, "sadness");
         surpriseSet = new LineDataSet(surpriseValues, "surprise");
 
+        //format the chart
         angerSet.setColor(getResources().getColor(R.color.pieColour1));
         contemptSet.setColor(getResources().getColor(R.color.pieColour2));
         disgustSet.setColor(getResources().getColor(R.color.pieColour3));
@@ -260,6 +294,12 @@ public class AfterActionResultActivity extends AppCompatActivity {
         lineChart.setData(data);
     }
 
+    /**
+     * Display the timestamp of each frame in a textview (id - txtFramesTimestamp).
+     *
+     * @param frameId   - the id of the frame
+     * @param timestamp - the value of the timestamp
+     */
     private void displayTimeStamp(int frameId, String timestamp) {
         TextView timestamps = (TextView) findViewById(R.id.txtFramesTimestamp);
 
@@ -267,6 +307,10 @@ public class AfterActionResultActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * When the back button is pressed clean all the data from the holders and return to the HomeActivity
+     */
     @Override
     public void onBackPressed() {
         HolderCleanerManager holderCleanerManager = new HolderCleanerManager();

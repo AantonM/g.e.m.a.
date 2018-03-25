@@ -6,128 +6,156 @@
     tools:context="com.cet325.gamers_emotional_state_detection.activities.GameplayActivity">
 
     <TableLayout
+        android:id="@+id/realTimeEmotions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/realTimeEmotions"
-        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
         android:stretchColumns="*">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
-                android:src="@drawable/ic_angry"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/angry"
+                android:src="@drawable/ic_angry" />
+
             <ImageView
-                android:src="@drawable/ic_contempt"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/contempt"
+                android:src="@drawable/ic_contempt" />
+
             <ImageView
-                android:src="@drawable/ic_disgussed"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/about_disgust"
+                android:src="@drawable/ic_disgussed" />
+
             <ImageView
-                android:src="@drawable/ic_fear"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/fear"
+                android:src="@drawable/ic_fear" />
+
             <ImageView
-                android:src="@drawable/ic_happy"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/happy"
+                android:src="@drawable/ic_happy" />
+
             <ImageView
-                android:src="@drawable/ic_neutral"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/neutral"
+                android:src="@drawable/ic_neutral" />
+
             <ImageView
-                android:src="@drawable/ic_sad"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/sad"
+                android:src="@drawable/ic_sad" />
+
             <ImageView
-                android:src="@drawable/ic_surprised"
-                android:layout_width="100px"
-                android:layout_height="100px"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:contentDescription="@string/surprised"
+                android:src="@drawable/ic_surprised" />
         </TableRow>
 
         <TableRow
+            android:id="@+id/realTimeEmotionsValues"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/realTimeEmotionsValues"
             android:visibility="invisible">
+
             <TextView
                 android:id="@+id/txtEmotionAngryValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionContemptValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionDisgussedValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionFearValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionHappyValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionNeutrallValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionSadValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
+
             <TextView
                 android:id="@+id/txtEmotionSurprisedValue"
-                android:text="0.000"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:inputType="numberDecimal"
                 android:maxLength="5"
-                android:inputType="numberDecimal"/>
+                android:text="@string/default_emotion_value"
+                android:textSize="20sp" />
         </TableRow>
+
         <TableRow
+            android:id="@+id/realTimeEmotionsError"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/realTimeEmotionsError"
             android:visibility="invisible">
+
             <TextView
                 android:id="@+id/txtErrorMessage"
-                android:gravity="center"
                 android:layout_span="8"
-                android:textSize="20dp"
-                android:text="No face detected."/>
+                android:gravity="center"
+                android:text="@string/no_face_detected"
+                android:textSize="20sp" />
         </TableRow>
     </TableLayout>
+
     <RelativeLayout
         android:id="@+id/gameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/realTimeEmotions"/>
+        android:layout_below="@+id/realTimeEmotions" />
 
 </RelativeLayout>

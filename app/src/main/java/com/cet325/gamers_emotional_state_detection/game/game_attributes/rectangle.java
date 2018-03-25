@@ -1,30 +1,32 @@
 package com.cet325.gamers_emotional_state_detection.game.game_attributes;
 
-//The rectangle class
 
+/**
+ * Rectangle object used within the game.
+ * <p>
+ * name: Path of Ants
+ *
+ * @author Zunair Syed
+ * @since August 1 2014
+ */
 public class rectangle {
 
-	private int x,  y,  width, height; //basically 4 properties of the rectanlge
-	
-	public rectangle(int x1,  int y1,int  width1, int height1){//have the constructor which makes the shape given the information
-		x=x1;
-		y=y1;
-		width=width1;
-		height=height1;
-	}
-	
-	
-	//And we have this method which basically checks if a given point is in the shape
-	public boolean rectContainsPoint(int px,int py){
-		if((px>=x && px<=(x+width))  && py>=y  && py<=(y+height)   ){//this mathematically derived formula checkes if the point is in the shape
-			
-			return true;//if it is, we return true, otherwise false
-		}else {
-			return false;
-		}
-		
-		
-	}
-	
-	
+    private int x, y, width, height; //basically 4 properties of the rectanlge
+
+    public rectangle(int x1, int y1, int width1, int height1) {//have the constructor which makes the shape given the information
+        x = x1;
+        y = y1;
+        width = width1;
+        height = height1;
+    }
+
+    //And we have this method which basically checks if a given point is in the shape
+    public boolean rectContainsPoint(int px, int py) {
+        if ((px >= x && px <= (x + width)) && py >= y && py <= (y + height)) {//this mathematically derived formula checkes if the point is in the shape
+
+            return true;//if it is, we return true, otherwise false
+        } else {
+            return false;
+        }
+    }
 }

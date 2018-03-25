@@ -8,17 +8,15 @@ import com.cet325.gamers_emotional_state_detection.activities.GameplayActivity;
 import com.cet325.gamers_emotional_state_detection.handlers.EmotionRecognitionApiHandler;
 import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 
-public class EmotionRecognitionAPIManager {
+public class FacialEmotionAPIManager {
 
     private ImageHolder imageHolder;
     private EmotionRecognitionApiHandler erah;
-    private int currentImageHolderSize;
     private int imageNumber;
     private OnDataSendToGameplayActivity dataSendToActivity;
 
-    public EmotionRecognitionAPIManager(Activity activity) {
+    public FacialEmotionAPIManager(Activity activity) {
         imageHolder = ImageHolder.getInstance();
-        currentImageHolderSize = 0;
         imageNumber = 0;
         dataSendToActivity = (GameplayActivity) activity;
     }
@@ -49,7 +47,7 @@ public class EmotionRecognitionAPIManager {
     {
         Log.d("DevDebug", "EmotionRecognitionAPIManager: API recognition stopped.");
         if(erah != null){
-            erah.stopEmotionalFaceRecognition();
+            erah.stopFacialEmotionRecognition();
         }
     }
 }

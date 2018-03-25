@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Welcome to \n Gameplayer Emotional Modeling Application"
+        android:text="@string/home_welcome"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="25sp"
@@ -23,12 +23,13 @@
 
     <ImageView
         android:id="@+id/home_logo"
-        android:layout_below="@+id/homeTitle"
-        android:layout_marginTop="20dp"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_below="@+id/homeTitle"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_gema"/>
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/home_logo"
+        android:src="@drawable/ic_gema" />
 
     <Button
         android:id="@+id/btnPlayGame"
@@ -37,7 +38,7 @@
         android:layout_below="@+id/home_logo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:text="Play game"
+        android:text="@string/btn_text_home"
         android:textAlignment="center" />
 
 

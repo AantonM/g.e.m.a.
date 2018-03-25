@@ -1,9 +1,8 @@
-/***
-"Path of Ants" Android Game
-By: Zunair Syed
-August 1 2014
-
-*/
+/**
+ * "Path of Ants" Android Game
+ * By: Zunair Syed
+ * August 1 2014
+ */
 package com.cet325.gamers_emotional_state_detection.game;
 
 import android.content.Context;
@@ -31,6 +30,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
+/**
+ * The open source game used for this project.
+ * <p>
+ * name: Path of Ants
+ *
+ * @author Zunair Syed
+ * @since August 1 2014
+ */
 public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
 
     private Context context;
@@ -113,8 +120,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
     private Bitmap bubble;
 
 
-    public Gameplay_PathOfAnth(Context context, int level_difficulty)//the contrutor
-    {
+    public Gameplay_PathOfAnth(Context context, int level_difficulty) {
         super(context);//calls the super class contructor and pass it this
         this.context = context;
         ourHolder = getHolder();//we get our holder (our canvas)
@@ -129,12 +135,15 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
         x[1] = 0;//x of finger 2
         y[1] = 0;//y of finger 2
 
-        switch (level_difficulty){
-            case 1: gameSpeed = 4;
+        switch (level_difficulty) {
+            case 1:
+                gameSpeed = 4;
                 break;
-            case 2: gameSpeed = 7;
+            case 2:
+                gameSpeed = 7;
                 break;
-            case 3: gameSpeed = 12;
+            case 3:
+                gameSpeed = 12;
                 break;
         }
 
@@ -536,7 +545,7 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
                     } else if (allMaps[4].checkOnRoad((int) antX, (int) antY)) {
                     } else if (allMaps[5].checkOnRoad((int) antX, (int) antY)) {
                     } else {//if not, then we vibrate the phone
-                        if(vibration) {
+                        if (vibration) {
                             vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(500);//vibrate for 800 miliseconds
                             vibrator = null;//make this null (makes game faster as we eliminate ram space)
@@ -836,8 +845,8 @@ public class Gameplay_PathOfAnth extends SurfaceView implements Runnable {
         return true;
     }
 
-    public void stop(){
-        isRunning=false;
+    public void stop() {
+        isRunning = false;
         onPlayGame = false;
     }
 }

@@ -11,46 +11,43 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:text="User details"
+        android:text="@string/user_details_title"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="30sp"
-        android:layout_marginLeft="10dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/txtUserId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView2"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="34dp"
+        android:digits="0,1,2,3,4,5,6,7,8,9,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM,_"
         android:ems="10"
-        android:hint="User ID (only a-z, A-Z, 0-9 and '_' allowed)"
-        android:inputType="textPersonName"
-        android:digits="0,1,2,3,4,5,6,7,8,9,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM,_"/>
+        android:hint="@string/hint_user_id"
+        android:inputType="textPersonName" />
 
     <RadioGroup
         android:id="@+id/rdgGameDifficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtUserId"
-        android:layout_marginLeft="10dp"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="15dp">
 
         <TextView
             android:id="@+id/txtTitleGameDifficulty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Game difficulty"
+            android:text="@string/game_difficulty_rbn_title"
             android:textSize="18sp" />
 
         <RadioButton
@@ -58,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="easy"
+            android:text="@string/rb_easy"
             android:textSize="18sp" />
 
         <RadioButton
@@ -66,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="medium"
+            android:text="@string/rb_medium"
             android:textSize="18sp" />
 
         <RadioButton
@@ -74,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="hard"
+            android:text="@string/rb_hard"
             android:textSize="18sp" />
     </RadioGroup>
 
@@ -83,27 +80,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/rdgGameDifficulty"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginBottom="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="Notes"
+        android:hint="@string/notes"
         android:inputType="textMultiLine"
-        android:maxLines="10"/>
+        android:maxLines="10" />
 
     <TextView
         android:id="@+id/txtMissingUserData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:layout_below="@+id/txtNotes"
-        android:text="Please insert Usert ID and select game difficulty."
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/error_msg_user_input"
         android:textColor="#B40021"
-        android:layout_marginLeft="10dp"
         android:textSize="18sp"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btnStartGame"
@@ -112,8 +108,7 @@
         android:layout_below="@+id/txtMissingUserData"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="Start Game" />
-
+        android:text="@string/btn_user_details_start" />
 
 
 </RelativeLayout>

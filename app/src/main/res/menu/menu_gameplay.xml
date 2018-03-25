@@ -5,7 +5,7 @@
     tools:context=".HomeActivity">
 
     <item android:id="@+id/btn_stopGameplay"
-        android:title="Settings"
+        android:title="@string/settings_title"
         android:icon="@android:drawable/ic_delete"
         app:showAsAction="ifRoom"/>
 

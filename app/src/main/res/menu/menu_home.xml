@@ -5,12 +5,12 @@
     tools:context=".HomeActivity">
 
     <item android:id="@+id/btn_settings"
-        android:title="Settings"
+        android:title="@string/settings_title"
         android:icon="@android:drawable/ic_menu_manage"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/btn_about"
-        android:title="About"
+        android:title="@string/about"
         android:icon="@android:drawable/ic_menu_info_details"
         app:showAsAction="ifRoom"/>
 

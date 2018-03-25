@@ -3,11 +3,10 @@ package com.cet325.gamers_emotional_state_detection.handlers;
 import android.util.Log;
 
 import com.cet325.gamers_emotional_state_detection.datasets.EmotionValuesDataset;
-import com.cet325.gamers_emotional_state_detection.holders.AnalysedEmotionFaceRecognitionResultsHolder;
-import com.cet325.gamers_emotional_state_detection.holders.EmotionFaceRecognitionResultsHolder;
+import com.cet325.gamers_emotional_state_detection.holders.AnalysedFacialEmotionRecognitionResultsHolder;
+import com.cet325.gamers_emotional_state_detection.holders.FacialEmotionRecognitionResultsHolder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -15,26 +14,40 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * SingleResultDataAnalysisHandler is responsible to handle all the work regarding the
+ * data analysis and saving the analysed data into a holder
+ */
 public class SingleResultDataAnalysisHandler {
 
-    private EmotionFaceRecognitionResultsHolder emotionFaceRecognitionResultsHolder;
+    private FacialEmotionRecognitionResultsHolder facialEmotionRecognitionResultsHolder;
     private LinkedHashMap<Integer, ArrayList<EmotionValuesDataset>> emotionsResultList;
-    private AnalysedEmotionFaceRecognitionResultsHolder analysedEmotionFaceRecognitionResultsHolder;
-    HashMap<String, Double> emotionValuesHM;
+    private AnalysedFacialEmotionRecognitionResultsHolder analysedFacialEmotionRecognitionResultsHolder;
+    private HashMap<String, Double> emotionValuesHM;
 
+    /**
+     * Constructor.
+     * Initialise the holders
+     */
     public SingleResultDataAnalysisHandler() {
-        emotionFaceRecognitionResultsHolder = EmotionFaceRecognitionResultsHolder.getInstance();
-        emotionsResultList = emotionFaceRecognitionResultsHolder.getAllEmotionRecognitionResults();
-        analysedEmotionFaceRecognitionResultsHolder = AnalysedEmotionFaceRecognitionResultsHolder.getInstance();
+        facialEmotionRecognitionResultsHolder = FacialEmotionRecognitionResultsHolder.getInstance();
+        emotionsResultList = facialEmotionRecognitionResultsHolder.getAllEmotionRecognitionResults();
+        analysedFacialEmotionRecognitionResultsHolder = AnalysedFacialEmotionRecognitionResultsHolder.getInstance();
         emotionValuesHM = new HashMap<>();
     }
 
+    /**
+     * Method that calls the different stages of the analysis
+     */
     public void executeMultyLayerDataFusion() {
 
         removeEmptyValues();
         fuzeData();
     }
 
+    /**
+     * Method that removes all empty values from the result data. Null value clearing
+     */
     private void removeEmptyValues() {
         for (Iterator<Map.Entry<Integer, ArrayList<EmotionValuesDataset>>> singleFrame = emotionsResultList.entrySet().iterator(); singleFrame.hasNext(); ) {
             Map.Entry<Integer, ArrayList<EmotionValuesDataset>> currentFrame = singleFrame.next();
@@ -46,8 +59,12 @@ public class SingleResultDataAnalysisHandler {
         Log.d("DevDebug:", "SingleResultDataAnalysisHandler: Empty values are removed from the result list.");
     }
 
-
+    /**
+     * Method that performas the three levels data analysis
+     */
     private void fuzeData() {
+
+        //iterate throught the data
         for (Iterator<Map.Entry<Integer, ArrayList<EmotionValuesDataset>>> singleFrame = emotionsResultList.entrySet().iterator(); singleFrame.hasNext(); ) {
 
             //get single frame
@@ -61,47 +78,55 @@ public class SingleResultDataAnalysisHandler {
             ArrayList<EmotionValuesDataset> fuzedEmotions = new ArrayList<>();
 
             //Sort the EmotionValuesDataset by emotional strength
-            Collections.sort(currentFrame.getValue(), new Comparator<EmotionValuesDataset>(){
-                public int compare(EmotionValuesDataset o1, EmotionValuesDataset o2){
+            Collections.sort(currentFrame.getValue(), new Comparator<EmotionValuesDataset>() {
+                public int compare(EmotionValuesDataset o1, EmotionValuesDataset o2) {
                     return Double.compare(o2.getEmotionValue(), o1.getEmotionValue());
                 }
             });
 
-            //Layer 1
+            //Layer 1 - get highest emotional value
             firstEmotionalValue = currentFrame.getValue().get(0);
             fuzedEmotions.add(firstEmotionalValue);
             calculateResults(firstEmotionalValue);
 
-            //Layer2
-            if(firstEmotionalValue.getEmotionValue() < 0.5 || currentFrame.getValue().get(1).getEmotionValue() > 0.25){
+            //Layer2 - get second highest emotional value
+            if (firstEmotionalValue.getEmotionValue() < 0.5 || currentFrame.getValue().get(1).getEmotionValue() > 0.25) {
                 secondEmotionalValue = currentFrame.getValue().get(1);
                 fuzedEmotions.add(secondEmotionalValue);
                 calculateResults(secondEmotionalValue);
 
-                //Layer3
-                if((firstEmotionalValue.getEmotionValue() < 0.5 && secondEmotionalValue.getEmotionValue() < 0.25) || currentFrame.getValue().get(2).getEmotionValue() > 0.2){
+                //Layer3 - get third highest emotional value
+                if ((firstEmotionalValue.getEmotionValue() < 0.5 && secondEmotionalValue.getEmotionValue() < 0.25) || currentFrame.getValue().get(2).getEmotionValue() > 0.2) {
                     thirdEmotionalValue = currentFrame.getValue().get(2);
                     fuzedEmotions.add(thirdEmotionalValue);
                     calculateResults(thirdEmotionalValue);
                 }
             }
 
-            String currentFrameTimestamp = emotionFaceRecognitionResultsHolder.getTimestampForGivenImageID(currentFrame.getKey());
+            //get the timestamp of the curent frame
+            String currentFrameTimestamp = facialEmotionRecognitionResultsHolder.getTimestampForGivenImageID(currentFrame.getKey());
 
-            analysedEmotionFaceRecognitionResultsHolder.addNewEmotionResult(currentFrame.getKey(), fuzedEmotions, currentFrameTimestamp);
+            //save the analysed data into the holder
+            analysedFacialEmotionRecognitionResultsHolder.addNewEmotionResult(currentFrame.getKey(), fuzedEmotions, currentFrameTimestamp);
         }
 
-        analysedEmotionFaceRecognitionResultsHolder.setSummedEmotionValues(emotionValuesHM);
+        //save the overal emotional value into a holder
+        analysedFacialEmotionRecognitionResultsHolder.setSummedEmotionValues(emotionValuesHM);
 
         Log.d("DevDebug:", "SingleResultDataAnalysisHandler: Data has been analysed.");
     }
 
+    /**
+     * Metod that calculates the overal emotional value
+     *
+     * @param newEmotionValuesDataset - EmotionValuesDataset: current emotion
+     */
     private void calculateResults(EmotionValuesDataset newEmotionValuesDataset) {
 
         //if there are no emotions save so far
-        if(emotionValuesHM.size() == 0){
+        if (emotionValuesHM.size() == 0) {
             emotionValuesHM.put(newEmotionValuesDataset.getEmotionName(), newEmotionValuesDataset.getEmotionValue());
-        }else {
+        } else {
             boolean emotionExists = false;
             for (Map.Entry<String, Double> entry : emotionValuesHM.entrySet()) {
                 //does the emotion exist if y add the value to the existing one
@@ -113,7 +138,7 @@ public class SingleResultDataAnalysisHandler {
                 }
             }
             //add the emotion to the list if it doesn't exist
-            if(!emotionExists){
+            if (!emotionExists) {
                 emotionValuesHM.put(newEmotionValuesDataset.getEmotionName(), newEmotionValuesDataset.getEmotionValue());
             }
         }

@@ -1,19 +1,26 @@
 package com.cet325.gamers_emotional_state_detection.managers;
 
-
 import com.cet325.gamers_emotional_state_detection.handlers.SingleResultDataAnalysisHandler;
 
+/**
+ * Manager that is responsible for the SingleResultDataAnalysisHandler and
+ * the process analysing data
+ */
 public class SingleResultDataAnalysisManager {
 
     private SingleResultDataAnalysisHandler singleResultDataAnalysisHandler;
 
-    public SingleResultDataAnalysisManager()
-    {
+    /**
+     * Constructor.
+     */
+    public SingleResultDataAnalysisManager() {
         singleResultDataAnalysisHandler = new SingleResultDataAnalysisHandler();
     }
 
-    public void startAnalysis()
-    {
+    /**
+     * Method that executes the data analysis.
+     */
+    public void startAnalysis() {
         singleResultDataAnalysisHandler.executeMultyLayerDataFusion();
     }
 }

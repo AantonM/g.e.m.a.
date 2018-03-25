@@ -19,67 +19,45 @@ import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.Size;
-import android.util.SparseIntArray;
 import android.view.Surface;
 
 import com.cet325.gamers_emotional_state_detection.holders.ImageHolder;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-
+/**
+ * CameraHandler is responsible to handle all the work regarding the picture taking process.
+ * It makes a use of Camera2 API.
+ */
 public class CameraHandler {
 
-    Context context;
-
-    //Input image state
-    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
-
-    static {
-        ORIENTATIONS.append(Surface.ROTATION_90, 90);
-        ORIENTATIONS.append(Surface.ROTATION_0, 0);
-        ORIENTATIONS.append(Surface.ROTATION_180, 270);
-        ORIENTATIONS.append(Surface.ROTATION_270, 180);
-    }
+    private Context context;
 
     //Camera variables
     private String cameraId;
     private CameraDevice cameraDevice;
-    private CameraCaptureSession cameraCaptureSessions;
-    private CaptureRequest.Builder captureRequestBuilder;
-    private Size imageDimension;
     private ImageReader imageReader;
 
     //Object used to store images
     private ImageHolder imageHolder;
 
-    //Output file variables
-    private File file;
-    private static final int REQUEST_CAMERA_PERMISSION = 200;
-    private boolean mFlashSupported;
+    //Threads
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
 
-    //the orientation of the device
-    int rotation;
     //bitmap of the taken photo
     private Bitmap bitmapImage;
 
     //camera state callback
-    CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
+    private CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             cameraDevice = camera;
@@ -99,27 +77,47 @@ public class CameraHandler {
         }
     };
 
+    /**
+     * Constructor.
+     * Manager - CameraManager
+     *
+     * @param context - Current context
+     */
     public CameraHandler(Context context) {
         this.context = context;
     }
 
+    /**
+     * This method open the camera lences and starts the thread required to use the camera.
+     */
     public void openCameraPicture() {
         startBackgroundThread();
         openCamera();
         Log.d("DevDebug", "CameraHandler: Camera opened.");
     }
 
+    /**
+     * This method stops the backgroud thread used by the camera which also closes the camera
+     */
     public void closeCameraPicture() {
         stopBackgroundThread();
     }
 
+    /**
+     * This method takes a picture using the front-facing camera and saves it into a holder.
+     * <p>
+     * TargetApi - LOLLIPOP (21)
+     */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void takePicture() {
         Log.d("DevDebug", "CameraHandler: Inside TakePicture");
+
+        //return if there is no camera attached
         if (cameraDevice == null) {
             return;
         }
 
+        //initialise the camera manager.
         CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         imageHolder = ImageHolder.getInstance();
 
@@ -133,13 +131,14 @@ public class CameraHandler {
             //Capture image with custom size
             int width = 640;
             int height = 480;
+
             //The picture capture is with lowest possible resolution, but this will afect the recognition results
-//            if (jpegSizes != null && jpegSizes.length > 0) {
-//                width = jpegSizes[jpegSizes.length-1].getWidth();
-//                height = jpegSizes[jpegSizes.length-1].getHeight();
-//            }
+            //if (jpegSizes != null && jpegSizes.length > 0) {
+            //    width = jpegSizes[jpegSizes.length-1].getWidth();
+            //    height = jpegSizes[jpegSizes.length-1].getHeight();
+            //}
 
-
+            //definition of the image reader
             final ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
             List<Surface> outputSurface = new ArrayList<>(2);
             outputSurface.add(reader.getSurface());
@@ -148,80 +147,42 @@ public class CameraHandler {
             captureBuilder.addTarget(reader.getSurface());
             captureBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
 
-            //Check orientation base on device TODO
-            //rotation = getWindowManager().getDefaultDisplay().getRotation();
-
             ImageReader.OnImageAvailableListener readerListener = new ImageReader.OnImageAvailableListener() {
+
+                /**
+                 * {@inheritDoc}
+                 *
+                 * @param imageReader - the ImageReader the callback is associated with.
+                 */
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
                     Log.d("DevDebug", "onImageAvailable: Picture has been taken");
                     Image image = null;
-                    //***TODO: delete file storage - currently used while developing
-                    try {
-                        //***
 
+                    //get the image
+                    image = reader.acquireLatestImage();
 
-                        image = reader.acquireLatestImage();
+                    //save in into a byte array
+                    ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                    byte[] bytes = new byte[buffer.capacity()];
+                    buffer.get(bytes);
 
-                        ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                        byte[] bytes = new byte[buffer.capacity()];
-                        buffer.get(bytes);
+                    //convert the image to bitmap
+                    bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
 
-                        //***TODO: delete file storage - currently used while developing
-                        save(bytes);
-                        //***
+                    //rotate the image
+                    bitmapImage = rotateImage(bitmapImage, 270);
 
-                        bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
-
-                        bitmapImage = rotateImage(bitmapImage, 270);
-
-                        //Save image to holder object
-                        imageHolder.setImage(bitmapImage);
-                        Log.d("DevDebug", "CameraHandler: Image holder size:" + imageHolder.getImageNumber());
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    } finally {
-                        if (image != null) {
-                            image.close();
-                        }
-                    }
+                    //Save image to holder object
+                    imageHolder.setImage(bitmapImage);
+                    Log.d("DevDebug", "CameraHandler: Image holder size:" + imageHolder.getImageNumber());
                 }
-
-                //***TODO: delete file storage - currently used while developing
-                private void save(byte[] bytes) throws IOException {
-                    File folder = new File(Environment.getExternalStorageDirectory() + "/face_pictures");
-
-                    boolean success = true;
-
-                    if (!folder.exists()) {
-                        success = folder.mkdir();
-                    }
-
-                    if (success) {
-                        file = new File(folder + "/" + UUID.randomUUID().toString() + ".jpg");
-                    } else {
-                        file = new File(Environment.getExternalStorageDirectory() + "/" + UUID.randomUUID().toString() + ".jpg");
-                    }
-
-                    OutputStream outputStream = null;
-                    try {
-                        outputStream = new FileOutputStream(file);
-                        outputStream.write(bytes);
-                        Log.d("DevDebug", "CameraHandler: Image is saved to external memory.");
-                    } finally {
-                        if (outputStream != null)
-                            outputStream.close();
-                    }
-                }
-                //***
             };
 
 
             reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
             final CameraCaptureSession.CaptureCallback captureListener = new CameraCaptureSession.CaptureCallback() {
+                /** {@inheritDoc} */
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
@@ -229,6 +190,7 @@ public class CameraHandler {
             };
 
             cameraDevice.createCaptureSession(outputSurface, new CameraCaptureSession.StateCallback() {
+                /** {@inheritDoc} */
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
                     try {
@@ -238,8 +200,10 @@ public class CameraHandler {
                     }
                 }
 
+                /** {@inheritDoc} */
                 @Override
-                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession){}
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+                }
 
             }, mBackgroundHandler);
 
@@ -248,6 +212,13 @@ public class CameraHandler {
         }
     }
 
+    /**
+     * This method rotates the taken picture. In android pictures are by default are rotated.
+     *
+     * @param source - Bitmap: the image that needs to be rotated
+     * @param angle  - Float: rotation angle
+     * @return Bitmap - rotated image
+     */
     private static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
@@ -255,6 +226,11 @@ public class CameraHandler {
                 matrix, true);
     }
 
+    /**
+     * This method opens the camera in advance.
+     * <p>
+     * TargetApi - LOLLIPOP (21)
+     */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void openCamera() {
         CameraManager manager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
@@ -264,7 +240,6 @@ public class CameraHandler {
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
             assert map != null;
-            imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
 
             manager.openCamera(cameraId, stateCallback, null);
 
@@ -273,15 +248,21 @@ public class CameraHandler {
         }
     }
 
+    /**
+     * Strat the background thread required for the picture taking process.
+     */
     private void startBackgroundThread() {
         mBackgroundThread = new HandlerThread("Camera Background");
         mBackgroundThread.start();
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
     }
 
+    /**
+     * Stop the background thread required for the picture taking process.
+     */
     private void stopBackgroundThread() {
         try {
-            if(mBackgroundThread != null){
+            if (mBackgroundThread != null) {
                 mBackgroundThread.quitSafely();
                 mBackgroundThread.join();
                 mBackgroundThread = null;
