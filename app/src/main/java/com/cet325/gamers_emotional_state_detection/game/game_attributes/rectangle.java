@@ -22,11 +22,8 @@ public class rectangle {
 
     //And we have this method which basically checks if a given point is in the shape
     public boolean rectContainsPoint(int px, int py) {
-        if ((px >= x && px <= (x + width)) && py >= y && py <= (y + height)) {//this mathematically derived formula checkes if the point is in the shape
-
-            return true;//if it is, we return true, otherwise false
-        } else {
-            return false;
-        }
+        //this mathematically derived formula checkes if the point is in the shape
+//if it is, we return true, otherwise false
+        return (px >= x && px <= (x + width)) && py >= y && py <= (y + height);
     }
 }

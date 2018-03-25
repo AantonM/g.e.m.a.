@@ -31,10 +31,10 @@ public class HolderCleanerManager {
      * Method that cleans all the Holders.
      */
     public void cleanHolders() {
-        analysedFacialEmotionRecognitionResultsHolder.clean();
-        facialEmotionRecognitionResultsHolder.clean();
-        imageHolder.clean();
-        userDetailsHolders.clean();
+        AnalysedFacialEmotionRecognitionResultsHolder.clean();
+        FacialEmotionRecognitionResultsHolder.clean();
+        ImageHolder.clean();
+        UserDetailsHolders.clean();
 
         Log.d("DevDebug", "Holder Cleaner Manager: Holders has been cleaned.");
 
