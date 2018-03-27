@@ -47,7 +47,7 @@ public class FacialEmotionAPIManager {
      * Method that checks if there is a new image
      * stored in the holder
      *
-     * @return boolean - true: if there is a new image, false:
+     * @return boolean - true: if there is a new image, false:the is no new image
      */
     private boolean thereIsANewImage() {
 
