@@ -108,7 +108,7 @@ public class EmotionRecognitionApiHandler {
         /**
          * {@inheritDoc}
          * <p>
-         * Send the image to the API in background
+         * Send the images to the API in background
          */
         @Override
         protected Face[] doInBackground(InputStream... params) {

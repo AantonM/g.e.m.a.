@@ -14,7 +14,7 @@ public class CameraManager {
     private CameraHandler camServ;
 
     /**
-     * Contructor that initializes the handler
+     * Constructor that initializes the handler
      *
      * @param applicationContext Context:context
      */
