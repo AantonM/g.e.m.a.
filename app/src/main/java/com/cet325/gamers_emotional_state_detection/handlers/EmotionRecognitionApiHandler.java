@@ -114,7 +114,7 @@ public class EmotionRecognitionApiHandler {
         protected Face[] doInBackground(InputStream... params) {
 
             //Connect to the API
-            FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://westcentralus.api.cognitive.microsoft.com/face/v1.0", "e1078de486574726866bcfebd0f90036");
+            FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://westcentralus.api.cognitive.microsoft.com/face/v1.0", "e11653b14e764174a743eecfb8719293");
 
             // The FaceAPI performs a full evaluation of the send image, but this project only
             // wants the API to analyse the emotional state so we pass the required analysis - FaceAttributeType.Emotion

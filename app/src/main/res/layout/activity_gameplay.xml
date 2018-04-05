@@ -32,7 +32,7 @@
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:contentDescription="@string/about_disgust"
+                android:contentDescription="@string/disgust"
                 android:src="@drawable/ic_disgussed" />
 
             <ImageView

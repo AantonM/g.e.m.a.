@@ -35,7 +35,6 @@
     <string name="home_logo">Home_logo</string>
 
     <!-- Results page-->
-    <string name="title_activity_after_action_result">ResultActivity</string>
     <string name="results_title">Results</string>
     <string name="pie_chart_description">• Pie chart diagram representing the summed values of the main emotions during the last gameplay.</string>
     <string name="line_chart_description">• Line diagram representing the emotions detected in each frame during the gameplay (x - frame number, y - emotion value)</string>

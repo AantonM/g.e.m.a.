@@ -1,7 +1,6 @@
 package com.cet325.gamers_emotional_state_detection.managers;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
 import com.cet325.gamers_emotional_state_detection.handlers.CameraHandler;
