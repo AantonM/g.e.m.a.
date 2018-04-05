@@ -255,10 +255,14 @@ public class GameplayActivity extends AppCompatActivity implements OnDataSendToG
         if (id == R.id.btn_stopGameplay) {
 
             //stop the facial emotion recognitions
-            facialEmotionRecognitionManager.stopEmotionFaceRecognition();
+            if (facialEmotionRecognitionManager != null) {
+                facialEmotionRecognitionManager.stopEmotionFaceRecognition();
+            }
 
             //stop the game
-            game.stop();
+            if (game != null) {
+                game.stop();
+            }
 
             //call the ResultsActivity
             Intent ResultIntent = new Intent(cntx, ResultsActivity.class);
