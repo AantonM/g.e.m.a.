@@ -1,114 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cet325.gamers_emotional_state_detection.activities.UserDetailsActivity">
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context="com.cet325.gamers_emotional_state_detection.activities.ResultsActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/user_details_title"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/txtUserId"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2"
-        android:layout_marginEnd="11dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="34dp"
-        android:digits="0,1,2,3,4,5,6,7,8,9,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM,_"
-        android:ems="10"
-        android:hint="@string/hint_user_id"
-        android:inputType="textPersonName" />
-
-    <RadioGroup
-        android:id="@+id/rdgGameDifficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtUserId"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="15dp">
+        android:layout_height="match_parent"
+        tools:context="com.cet325.gamers_emotional_state_detection.activities.UserDetailsActivity">
 
         <TextView
-            android:id="@+id/txtTitleGameDifficulty"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/game_difficulty_rbn_title"
-            android:textSize="18sp" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/user_details_title"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-        <RadioButton
-            android:id="@+id/rdbEasy"
+        <EditText
+            android:id="@+id/txtUserId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:layout_marginEnd="11dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="34dp"
+            android:digits="0,1,2,3,4,5,6,7,8,9,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM,_"
+            android:ems="10"
+            android:hint="@string/hint_user_id"
+            android:inputType="textPersonName" />
+
+        <RadioGroup
+            android:id="@+id/rdgGameDifficulty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rb_easy"
-            android:textSize="18sp" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/txtUserId"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="15dp">
 
-        <RadioButton
-            android:id="@+id/rdbMedium"
+            <TextView
+                android:id="@+id/txtTitleGameDifficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/game_difficulty_rbn_title"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/rdbEasy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rb_easy"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/rdbMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rb_medium"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/rdbHard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/rb_hard"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/txtNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/rdgGameDifficulty"
+            android:layout_marginBottom="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="@string/notes"
+            android:inputType="textMultiLine"
+            android:maxLines="10" />
+
+        <TextView
+            android:id="@+id/txtMissingUserData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rb_medium"
-            android:textSize="18sp" />
+            android:layout_below="@+id/txtNotes"
+            android:layout_marginBottom="40dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/error_msg_user_input"
+            android:textColor="#B40021"
+            android:textSize="18sp"
+            android:visibility="invisible" />
 
-        <RadioButton
-            android:id="@+id/rdbHard"
+        <Button
+            android:id="@+id/btnStartGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/rb_hard"
-            android:textSize="18sp" />
-    </RadioGroup>
-
-    <EditText
-        android:id="@+id/txtNotes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/rdgGameDifficulty"
-        android:layout_marginBottom="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="@string/notes"
-        android:inputType="textMultiLine"
-        android:maxLines="10" />
-
-    <TextView
-        android:id="@+id/txtMissingUserData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtNotes"
-        android:layout_marginBottom="40dp"
-        android:layout_marginStart="10dp"
-        android:text="@string/error_msg_user_input"
-        android:textColor="#B40021"
-        android:textSize="18sp"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/btnStartGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtMissingUserData"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="@string/btn_user_details_start" />
+            android:layout_below="@+id/txtMissingUserData"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="@string/btn_user_details_start" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

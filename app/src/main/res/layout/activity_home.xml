@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cet325.gamers_emotional_state_detection.activities.HomeActivity">
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context="com.cet325.gamers_emotional_state_detection.activities.ResultsActivity">
 
-    <TextView
-        android:id="@+id/homeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/home_welcome"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="25dp" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.cet325.gamers_emotional_state_detection.activities.HomeActivity">
 
-    <ImageView
-        android:id="@+id/home_logo"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_below="@+id/homeTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/home_logo"
-        android:src="@drawable/ic_gema" />
+        <TextView
+            android:id="@+id/homeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/home_welcome"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="59dp"
+            tools:layout_editor_absoluteY="25dp" />
 
-    <Button
-        android:id="@+id/btnPlayGame"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/home_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:text="@string/btn_text_home"
-        android:textAlignment="center" />
+        <ImageView
+            android:id="@+id/home_logo"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@+id/homeTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/home_logo"
+            android:src="@drawable/ic_gema" />
+
+        <Button
+            android:id="@+id/btnPlayGame"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/home_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:text="@string/btn_text_home"
+            android:textAlignment="center" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
