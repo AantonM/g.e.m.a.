@@ -133,10 +133,10 @@ public class CameraHandler {
             int height = 480;
 
             //The picture capture is with lowest possible resolution, but this will afect the recognition results
-            //if (jpegSizes != null && jpegSizes.length > 0) {
-            //    width = jpegSizes[jpegSizes.length-1].getWidth();
-            //    height = jpegSizes[jpegSizes.length-1].getHeight();
-            //}
+            if (jpegSizes != null && jpegSizes.length > 0) {
+                width = jpegSizes[jpegSizes.length-1].getWidth();
+                height = jpegSizes[jpegSizes.length-1].getHeight();
+            }
 
             //definition of the image reader
             final ImageReader reader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1);
