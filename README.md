@@ -14,7 +14,7 @@ The application applies several methodologies to handle fuzzy data when processi
 
 With the increase of the gaming industry, game developers are trying to find a way to produce more intense products, which led to the development of a Dynamic Game Difficulty Balancing framework. The purpose of this framework is to maintain the game player’s interest by modifying the game settings depending on the user’s emotional feelings.
 
-This project provides a solution that can be used by a closed group of game developers, that would like to investigate how their gameplay affects the customers.
+This project provides a solution that can be used by a closed group of game developers, that would like to investigate how their gameplay affects the customers. 
 
 <h2 id="solution">The solution :bulb:</h2>
 
