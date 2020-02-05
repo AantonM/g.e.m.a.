@@ -1,7 +1,7 @@
 ![banner](https://raw.githubusercontent.com/AantonM/g.e.m.a./master/readme/ic_gema.png) 
 
 
-# Gameplayer Emotional Modeling Application - G.E.M.A.
+# Gameplayer Emotional Modeling Application - G.E.M.A. 
 
 
 <h2 id="desciption">Description :scroll:</h2>
